@@ -1,18 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 // import { toast } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 // import loginImage from '../assets/login.svg';
-import { googleLogin, loginUser } from '../../features/auth/authSlice';
+import { googleLogin, loginUser } from "../../features/auth/authSlice";
+
 const Login = () => {
   const { isLoading, email, isError, error } = useSelector(
     (state) => state.auth
   );
   const { register, handleSubmit, reset } = useForm();
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const dispatch = useDispatch();
 
   const onSubmit = ({ email, password }) => {
@@ -25,20 +25,24 @@ const Login = () => {
 
   useEffect(() => {
     if (!isLoading && email) {
-      navigate('/');
+      push("/");
     }
   }, [isLoading, email]);
 
   useEffect(() => {
     if (isError && error) {
-    //   toast.error(error);
+      //   toast.error(error);
     }
   }, [isError, error]);
 
   return (
     <div className="flex h-screen items-center">
       <div className="w-1/2">
-        <img src={'https://avatars.githubusercontent.com/u/61866994?v=4'} className="h-full w-full" alt="" />
+        <img
+          src={"https://avatars.githubusercontent.com/u/61866994?v=4"}
+          className="h-full w-full"
+          alt=""
+        />
       </div>
       <div className="w-1/2 grid place-items-center">
         <div className="bg-[#FFFAF4] rounded-lg grid place-items-center p-10">
@@ -49,7 +53,7 @@ const Login = () => {
                 <label htmlFor="email" className="ml-5">
                   Email
                 </label>
-                <input type="email" {...register('email')} id="email" />
+                <input type="email" {...register("email")} id="email" />
               </div>
               <div className="flex flex-col items-start">
                 <label htmlFor="password" className="ml-5">
@@ -58,23 +62,23 @@ const Login = () => {
                 <input
                   type="password"
                   id="password"
-                  {...register('password')}
+                  {...register("password")}
                 />
               </div>
               <div className="relative !mt-8">
                 <button
                   type="submit"
-                  className="font-bold text-white py-3 rounded-full bg-primary w-full"
+                  className="font-bold text-white py-3 rounded-full bg-primary w-full text-black"
                 >
                   Login
                 </button>
               </div>
               <div>
                 <p>
-                  Don&apos;t have an account?{' '}
+                  Don&apos;t have an account?{" "}
                   <span
                     className="text-primary hover:underline cursor-pointer"
-                    onClick={() => navigate('/signup')}
+                    onClick={() => push("/signup")}
                   >
                     Sign up
                   </span>
@@ -85,7 +89,7 @@ const Login = () => {
 
           <button
             onClick={handleGoogleLogin}
-            className="font-bold text-white py-3 rounded-full bg-primary w-full"
+            className="font-bold text-white py-3 rounded-full bg-primary w-full text-black"
           >
             Login with GOOGLE
           </button>
