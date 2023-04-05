@@ -1,5 +1,8 @@
-import Login from "@/components/authentication/Login";
+//external imports
 import React from "react";
+
+//internal imports
+import Login from "@/components/authentication/Login";
 
 const index = () => {
   return (

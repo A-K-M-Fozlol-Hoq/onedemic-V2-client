@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+//external imports
 import * as React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
@@ -10,11 +10,11 @@ import createEmotionCache from "../createEmotionCache";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
-import store from "../app/store";
-// Client-side cache shared for the whole session
-// of the user in the browser.
-
 const clientSideEmotionCache = createEmotionCache();
+
+//internal imports
+import store from "../app/store";
+import "@/styles/globals.css";
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
