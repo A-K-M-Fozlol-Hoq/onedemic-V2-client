@@ -1,10 +1,6 @@
-// utils.js
-
 import { toast } from "react-toastify";
 
-const utilsFunctions = {};
-
-const notify = (
+export const notify = (
   message = "This is a notification message.",
   type = "info",
   autoClose = 2500
@@ -14,7 +10,3 @@ const notify = (
     type: type,
   });
 };
-
-utilsFunctions.notify = notify;
-
-export default utilsFunctions;

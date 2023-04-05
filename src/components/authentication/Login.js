@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 // import loginImage from '../assets/login.svg';
 import { googleLogin, loginUser } from "../../features/auth/authSlice";
+import { onAuthStateChanged } from "firebase/auth";
+import auth from "@/firebase/firebase.config";
+import jwt_decode from "jwt-decode";
+// const refreshToken = localStorage.getItem('refreshToken');
 
 const Login = () => {
   const { isLoading, email, isError, error } = useSelector(
@@ -30,6 +34,35 @@ const Login = () => {
   }, [isLoading, email]);
 
   useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      // notify();
+      console.log(user);
+      const accessToken = user.accessToken;
+
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      // if (tokenExpiration - currentTime < 600) {
+      //   // if remaining time is less than 10 minutes
+      //   const refreshToken = localStorage.getItem("refresh_token");
+      //   const response = await axios.post(
+      //     "https://your-api.com/refresh_token",
+      //     {
+      //       refresh_token: refreshToken,
+      //     }
+      //   );
+
+      //   const newAccessToken = response.data.access_token;
+      //   localStorage.setItem("access_token", newAccessToken);
+      //   //   const expirationTime = jwt_decode(accessToken).exp * 1000;
+      //   // const currentTime = new Date().getTime();
+      //   // // const refreshToken = localStorage.getItem('refreshToken');
+      //   // const newAccessToken = await auth.currentUser.getIdToken(true);
+      //   // console.log({ accessToken, newAccessToken });
+      // }
+    });
+  }, []);
+
+  useEffect(() => {
     if (isError && error) {
       //   toast.error(error);
     }
@@ -38,11 +71,7 @@ const Login = () => {
   return (
     <div className="flex h-screen items-center">
       <div className="w-1/2">
-        <img
-          src={"https://avatars.githubusercontent.com/u/61866994?v=4"}
-          className="h-full w-full"
-          alt=""
-        />
+        <img src={""} className="h-full w-full" alt="" />
       </div>
       <div className="w-1/2 grid place-items-center">
         <div className="bg-[#FFFAF4] rounded-lg grid place-items-center p-10">

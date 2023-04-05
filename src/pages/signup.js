@@ -1,7 +1,7 @@
 import Signup from "@/components/authentication/Signup";
 import React from "react";
 
-const signup = () => {
+const index = () => {
   return (
     <div>
       <Signup></Signup>
@@ -9,4 +9,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default index;

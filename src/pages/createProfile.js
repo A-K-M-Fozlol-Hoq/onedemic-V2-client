@@ -1,10 +1,10 @@
-import Login from "@/components/authentication/Login";
+import CreateProfile from "@/components/createProfile/CreateProfile";
 import React from "react";
 
 const index = () => {
   return (
     <div>
-      <Login></Login>
+      <CreateProfile />
     </div>
   );
 };
