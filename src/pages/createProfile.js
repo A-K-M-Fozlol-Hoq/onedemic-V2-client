@@ -3,11 +3,14 @@ import React from "react";
 
 //internal imports
 import CreateProfile from "@/components/createProfile/CreateProfile";
+import PrivateComponent from "@/components/HOC/PrivateComponent";
 
 const index = () => {
   return (
     <div>
-      <CreateProfile />
+      <PrivateComponent>
+        <CreateProfile />
+      </PrivateComponent>
     </div>
   );
 };

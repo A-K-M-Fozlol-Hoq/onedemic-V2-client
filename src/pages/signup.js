@@ -1,7 +1,23 @@
-import Signup from "@/components/authentication/Signup";
-import React from "react";
+//external imports
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
-const index = () => {
+//internal imports
+import Signup from "@/components/authentication/Signup";
+import auth from "@/firebase/firebase.config";
+
+const Index = () => {
+  const { push } = useRouter();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user?.email) {
+        push("/dashboard");
+      }
+    });
+  }, [push]);
+
   return (
     <div>
       <Signup></Signup>
@@ -9,4 +25,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
