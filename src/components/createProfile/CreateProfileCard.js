@@ -21,6 +21,7 @@ const CreateProfileCard = (props) => {
       const data = await response.json();
 
       notify("Image uploaded successfully" + data?.data?.url, "success");
+
       setData({
         ...data,
         image: data?.data?.url || "",

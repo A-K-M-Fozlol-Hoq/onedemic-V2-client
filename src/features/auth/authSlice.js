@@ -1,3 +1,4 @@
+//external imports
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
@@ -5,6 +6,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+
+//internal imports
 import auth from "../../firebase/firebase.config";
 
 const initialState = {
@@ -20,6 +23,7 @@ const initialState = {
     endDate: "",
     usedCreditToday: 0,
     accessToken: "",
+    uid: "",
   },
   isLoading: true,
   isError: false,
@@ -76,11 +80,13 @@ const authSlice = createSlice({
         endDate: "",
         usedCreditToday: 0,
         accessToken: "",
+        uid: "",
       };
     },
     setUser: (state, { payload }) => {
       state.user.email = payload.email;
       state.user.accessToken = payload.accessToken;
+      state.user.uid = payload.uid;
       state.isLoading = false;
       state.isError = false;
       state.error = "";

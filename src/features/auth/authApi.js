@@ -1,17 +1,18 @@
+//internal imports
 import { getUser } from "./authSlice";
 import apiSlice from "../api/apiSlice";
-// import { useSelector } from "react-redux";
 
+//create authApi -module scaffolding
 const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
-      query: (data) => ({
+      query: ({ accessToken, ...data }) => ({
         method: "POST",
         url: "/user/createUser",
         body: data,
-        // headers: {
-        //   Authorization: `Bearer ${useSelector((state) => state.auth.user.accessToken)}`,
-        // },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
@@ -25,4 +26,5 @@ const authApi = apiSlice.injectEndpoints({
   }),
 });
 
+//exports properties of authApi
 export const { useRegisterMutation } = authApi;

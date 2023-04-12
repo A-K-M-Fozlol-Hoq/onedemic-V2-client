@@ -1,5 +1,7 @@
+//external imports
 import { toast } from "react-toastify";
 
+//Export notify to show colorful pupup message at UI
 export const notify = (
   message = "This is a notification message.",
   type = "info",

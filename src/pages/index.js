@@ -1,7 +1,8 @@
 //external imports
-import LandingPage from "@/components/home/LandingPage";
 import Head from "next/head";
-import { useRouter } from "next/navigation";
+
+//internal imports
+import LandingPage from "@/components/home/LandingPage";
 
 export default function Home() {
   return (

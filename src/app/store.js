@@ -1,7 +1,11 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import apiSlice from '../features/api/apiSlice';
-import authSlice from '../features/auth/authSlice';
+//external imports
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
+//internal imports
+import apiSlice from "../features/api/apiSlice";
+import authSlice from "../features/auth/authSlice";
+
+//configure app store
 const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
@@ -11,4 +15,5 @@ const store = configureStore({
     getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
+// export app store
 export default store;

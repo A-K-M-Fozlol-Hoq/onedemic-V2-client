@@ -1,15 +1,20 @@
-import auth from "@/firebase/firebase.config";
-import { notify } from "@/helpers/utilsFuctions";
+//external imports
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import React from "react";
+import { useDispatch } from "react-redux";
 
-const index = () => {
+//internal imports
+import auth from "@/firebase/firebase.config";
+import { notify } from "@/helpers/utilsFuctions";
+
+const Index = () => {
+  const dispatch = useDispatch();
+
   const handleSendEmail = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user.emailVerified);
         if (user.emailVerified) {
-          console.log("already verified");
+          //user is already verified, no need to do anything
         } else {
           sendEmailVerification(user)
             .then(() => {
@@ -19,7 +24,6 @@ const index = () => {
               );
             })
             .catch((error) => {
-              console.log(error, "1234");
               if (
                 error.message === "Firebase: Error (auth/too-many-requests)."
               ) {
@@ -33,7 +37,7 @@ const index = () => {
             });
         }
       } else {
-        // dispatch(toggleLoading());
+        dispatch(logout());
       }
     });
   };
@@ -46,4 +50,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

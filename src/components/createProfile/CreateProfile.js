@@ -1,9 +1,11 @@
 //external imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 //internal imports
 import CreateProfileCard from "./CreateProfileCard";
 import { notify } from "@/helpers/utilsFuctions";
+import { useRegisterMutation } from "@/features/auth/authApi";
 
 const CreateProfile = () => {
   const [studentsInfo, setStudentsInfo] = useState({
@@ -16,9 +18,31 @@ const CreateProfile = () => {
   });
   const [role, setRole] = useState("");
 
+  const {
+    user: { accessToken, email, uid },
+  } = useSelector((state) => state.auth);
+
+  const [postUser, { error, isError, data, isSuccess }] = useRegisterMutation();
+
+  useEffect(() => {
+    if (isError && error) {
+      if (error?.status == 401) {
+        notify(
+          "Session expired! Please reload the page or login again.",
+          "error"
+        );
+      } else {
+        notify(error?.data?.message || "Something went wrong", "error");
+      }
+    }
+    if (isSuccess && data?.isSuccess) {
+      notify("Profile created successfully!", "success");
+    }
+  }, [isError, error, isSuccess, data]);
+
   const handleCreateProfile = async (e) => {
     e.preventDefault();
-    console.log("role: " + role);
+
     if (role === "student" && !(studentsInfo.name && studentsInfo.image)) {
       notify("Please enter your name and profile picture properly", "error");
       return;
@@ -29,8 +53,31 @@ const CreateProfile = () => {
       notify("Please enter your name and profile picture properly", "error");
       return;
     }
-
-    notify("Account creating" + role, "info");
+    if (role == "student") {
+      const resp = await postUser({
+        role: "student",
+        name: studentsInfo.name,
+        profile: studentsInfo.image,
+        email: email,
+        status: "active",
+        accessToken,
+        uid,
+        selectedPlan: "none",
+      });
+      console.log({ resp });
+      // check isSuccess and redirect to dashboard
+    } else {
+      postUser({
+        role: "teacher",
+        name: teachersInfo.name,
+        profile: teachersInfo.image,
+        email: email,
+        status: "active",
+        accessToken,
+        uid,
+        selectedPlan: "none",
+      });
+    }
   };
 
   return (
