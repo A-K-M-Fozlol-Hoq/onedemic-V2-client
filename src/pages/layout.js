@@ -6,7 +6,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { RiUserSettingsLine, RiFilePaper2Line } from "react-icons/ri";
 import { TfiWrite } from "react-icons/tfi";
 import { BsGrid1X2Fill, BsFillFileEarmarkLock2Fill } from "react-icons/bs";
-import { GrSend } from "react-icons/gr";
+import { GrSend, GrHomeOption } from "react-icons/gr";
 import { TbTools, TbChartArrows } from "react-icons/tb";
 import { MdOutlineSsidChart } from "react-icons/md";
 import { SiProtodotio } from "react-icons/si";
@@ -22,6 +22,11 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 const links = [
+  {
+    href: "/dashboard",
+    text: "Dashboard",
+    icon: <GrHomeOption />,
+  },
   {
     href: "/manage-profile",
     text: "Manage Profile",
