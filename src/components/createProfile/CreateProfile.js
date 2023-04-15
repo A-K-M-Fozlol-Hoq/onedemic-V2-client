@@ -7,6 +7,7 @@ import CreateProfileCard from "./CreateProfileCard";
 import { notify } from "@/helpers/utilsFuctions";
 import { useRegisterMutation } from "@/features/auth/authApi";
 import { getUser } from "@/features/auth/authSlice";
+import { useRouter } from "next/router";
 
 const CreateProfile = () => {
   const [studentsInfo, setStudentsInfo] = useState({
@@ -18,12 +19,18 @@ const CreateProfile = () => {
     image: "dfg",
   });
   const [role, setRole] = useState("");
+  const { push } = useRouter();
 
   const {
-    user: { accessToken, email, uid },
+    user: { accessToken, email, uid, selectedPlan },
   } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (email && accessToken && selectedPlan) {
+      push("/dashboard");
+    }
+  }, [email, accessToken, selectedPlan, push]);
   const [postUser, { error, isError, data, isSuccess }] = useRegisterMutation();
 
   useEffect(() => {

@@ -18,11 +18,9 @@ function PrivateComponent({ children }) {
     user: { accessToken, email, role },
   } = useSelector((state) => state.auth);
 
-  console.log(email, role, "here is the email and role from dashboard route");
-
-  if (accessToken && email && !role) {
-    dispatch(getUser({ accessToken, email }));
-  }
+  // if (accessToken && email && !role) {
+  //   dispatch(getUser({ accessToken, email }));
+  // }
 
   // //@todo: implement refreshTime if you have available time.
   // function refreshToken() {

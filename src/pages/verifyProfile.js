@@ -20,6 +20,19 @@ const Index = () => {
     push("/dashboard");
   }
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        if (user.emailVerified) {
+          push("/createProfile");
+        }
+      } else {
+        dispatch(logout());
+        push("/login");
+      }
+    });
+  }, [push, dispatch]);
+
   const handleSendEmail = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
