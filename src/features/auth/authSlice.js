@@ -24,6 +24,7 @@ const initialState = {
     usedCreditToday: 0,
     accessToken: "",
     uid: "",
+    _id: "",
   },
   isLoading: true,
   isError: false,
@@ -38,16 +39,28 @@ export const createUser = createAsyncThunk(
   }
 );
 
-export const getUser = createAsyncThunk("auth/getUser", async (email) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_DEV_URL}/user/${email}`);
-  const data = await res.json();
+export const getUser = createAsyncThunk(
+  "auth/getUser",
+  async ({ accessToken, email }) => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_DEV_URL}/user/getUser/${email}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
 
-  if (data.status) {
-    return data;
-  } else {
-    return email;
+    const data = await res.json();
+
+    if (data?.isSuccess && data?.user) {
+      return data.user;
+    } else {
+      return 0;
+    }
   }
-});
+);
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -81,6 +94,7 @@ const authSlice = createSlice({
         usedCreditToday: 0,
         accessToken: "",
         uid: "",
+        _id: "",
       };
     },
     setUser: (state, { payload }) => {
@@ -168,8 +182,17 @@ const authSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        if (payload.status) {
-          state.user = payload.data;
+        console.log(payload);
+        if (payload._id) {
+          state.user.name = payload.name;
+          state.user.role = payload.role;
+          state.user.status = payload.status;
+          state.user.profile = payload.profile;
+          state.user.uid = payload.uid;
+          state.user.stripeCustomerID = payload.stripeCustomerID;
+          state.user.selectedPlan = payload.selectedPlan;
+          state.user.endDate = payload.endDate;
+          state.user._id = payload._id;
         } else {
           state.user.email = payload;
         }

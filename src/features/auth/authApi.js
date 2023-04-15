@@ -14,14 +14,17 @@ const authApi = apiSlice.injectEndpoints({
           Authorization: `Bearer ${accessToken}`,
         },
       }),
-      async onQueryStarted(data, { dispatch, queryFulfilled }) {
-        try {
-          const res = queryFulfilled;
-          dispatch(getUser(data.email));
-        } catch (e) {
-          console.log(e);
-        }
-      },
+      // async onQueryStarted(
+      //   { accessToken, ...data },
+      //   { dispatch, queryFulfilled }
+      // ) {
+      //   try {
+      //     const res = queryFulfilled;
+      //     dispatch(getUser({ accessToken, email: data.email }));
+      //   } catch (e) {
+      //     console.log(e);
+      //   }
+      // },
     }),
   }),
 });

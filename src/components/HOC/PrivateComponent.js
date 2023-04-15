@@ -9,25 +9,31 @@ import { useRouter } from "next/navigation";
 //internal imports
 import { notify } from "@/helpers/utilsFuctions";
 import auth from "@/firebase/firebase.config";
-import { logout, setUser } from "@/features/auth/authSlice";
+import { getUser, logout, setUser } from "@/features/auth/authSlice";
 
 function PrivateComponent({ children }) {
   const dispatch = useDispatch();
   const { push } = useRouter();
   const {
-    user: { accessToken, email },
+    user: { accessToken, email, role },
   } = useSelector((state) => state.auth);
 
-  //@todo: implement refreshTime if you have available time.
-  function refreshToken() {
-    auth()
-      .currentUser.getIdToken(true)
-      .then((token) => {
-        console.log({ token });
-        setTimeout(refreshToken, 1000); // refresh token after 55 minutes
-        // setTimeout(refreshToken, 55 * 60 * 1000); // refresh token after 55 minutes
-      });
+  console.log(email, role, "here is the email and role from dashboard route");
+
+  if (accessToken && email && !role) {
+    dispatch(getUser({ accessToken, email }));
   }
+
+  // //@todo: implement refreshTime if you have available time.
+  // function refreshToken() {
+  //   auth()
+  //     .currentUser.getIdToken(true)
+  //     .then((token) => {
+  //       console.log({ token });
+  //       setTimeout(refreshToken, 1000); // refresh token after 55 minutes
+  //       // setTimeout(refreshToken, 55 * 60 * 1000); // refresh token after 55 minutes
+  //     });
+  // }
 
   //capture user info at this useEffect
   useEffect(() => {

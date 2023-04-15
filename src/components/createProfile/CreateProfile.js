@@ -1,11 +1,12 @@
 //external imports
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //internal imports
 import CreateProfileCard from "./CreateProfileCard";
 import { notify } from "@/helpers/utilsFuctions";
 import { useRegisterMutation } from "@/features/auth/authApi";
+import { getUser } from "@/features/auth/authSlice";
 
 const CreateProfile = () => {
   const [studentsInfo, setStudentsInfo] = useState({
@@ -21,6 +22,7 @@ const CreateProfile = () => {
   const {
     user: { accessToken, email, uid },
   } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const [postUser, { error, isError, data, isSuccess }] = useRegisterMutation();
 
@@ -54,29 +56,40 @@ const CreateProfile = () => {
       return;
     }
     if (role == "student") {
-      const resp = await postUser({
-        role: "student",
-        name: studentsInfo.name,
-        profile: studentsInfo.image,
-        email: email,
-        status: "active",
-        accessToken,
-        uid,
-        selectedPlan: "none",
-      });
-      console.log({ resp });
-      // check isSuccess and redirect to dashboard
+      try {
+        const resp = await postUser({
+          role: "student",
+          name: studentsInfo.name,
+          profile: studentsInfo.image,
+          email: email,
+          status: "active",
+          accessToken,
+          uid,
+          selectedPlan: "none",
+        });
+        console.log({ resp });
+        // check redirect to dashboard
+        dispatch(getUser({ accessToken, email: email }));
+      } catch (e) {
+        console.log(e);
+      }
     } else {
-      postUser({
-        role: "teacher",
-        name: teachersInfo.name,
-        profile: teachersInfo.image,
-        email: email,
-        status: "active",
-        accessToken,
-        uid,
-        selectedPlan: "none",
-      });
+      try {
+        const resp = await postUser({
+          role: "teacher",
+          name: teachersInfo.name,
+          profile: teachersInfo.image,
+          email: email,
+          status: "active",
+          accessToken,
+          uid,
+          selectedPlan: "none",
+        });
+        // check redirect to dashboard
+        dispatch(getUser({ accessToken, email: email }));
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 

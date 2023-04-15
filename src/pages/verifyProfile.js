@@ -1,14 +1,24 @@
 //external imports
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 //internal imports
 import auth from "@/firebase/firebase.config";
 import { notify } from "@/helpers/utilsFuctions";
+import { useRouter } from "next/router";
+import { logout } from "@/features/auth/authSlice";
 
 const Index = () => {
   const dispatch = useDispatch();
+  const {
+    user: { email, role },
+  } = useSelector((state) => state.auth);
+  const { push } = useRouter();
+
+  if (email && role) {
+    push("/dashboard");
+  }
 
   const handleSendEmail = () => {
     onAuthStateChanged(auth, (user) => {
@@ -37,6 +47,7 @@ const Index = () => {
             });
         }
       } else {
+        notify("Please login first to verify profile", "error");
         dispatch(logout());
       }
     });
