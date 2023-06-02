@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { RiUserSettingsLine, RiFilePaper2Line } from "react-icons/ri";
@@ -20,32 +20,23 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const links = [
-  {
-    href: "/dashboard",
-    text: "Dashboard",
-    icon: <GrHomeOption />,
-  },
+  // {
+  //   href: "/dashboard",
+  //   text: "Dashboard",
+  //   icon: <GrHomeOption />,
+  // },
   {
     href: "/manage-profile",
     text: "Manage Profile",
     icon: <RiUserSettingsLine />,
   },
   {
-    href: "/create-course",
-    text: "Create Course",
-    icon: <TfiWrite />,
-  },
-  {
     href: "/courses",
     text: "Courses",
     icon: <BsGrid1X2Fill />,
-  },
-  {
-    href: "/create-exam",
-    text: "Create exam",
-    icon: <RiFilePaper2Line />,
   },
   {
     href: "/messaging",
@@ -58,7 +49,7 @@ const links = [
     icon: <TbTools />,
   },
   {
-    href: "/manage-resule",
+    href: "/manage-result",
     text: "Result Management",
     icon: <MdOutlineSsidChart />,
   },
@@ -79,7 +70,14 @@ const links = [
   },
 ];
 
-export default function ExamLayout({ children }) {
+export default function StudentDashboardLayout({ children }) {
+  // const { push } = useRouter();
+  const { user } = useSelector((state) => state.auth);
+  // useEffect(() => {
+  //   if (user.role !== "student" || user.role !== "teacher") {
+  //     push("/createProfile");
+  //   }
+  // }, []);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -109,7 +107,7 @@ export default function ExamLayout({ children }) {
         </button>
         <nav className="flex items-center space-x-4">
           <img
-            src={"https://avatars.githubusercontent.com/u/61866994?v=4"}
+            src={user.profile}
             style={{ height: "30px", width: "30px", borderRadius: "50%" }}
             alt=""
           />
@@ -117,7 +115,7 @@ export default function ExamLayout({ children }) {
             onClick={handleViewProfile}
             style={{ margin: "0 15px 0 5px" }}
           >
-            akmfozlolhoq@gmailcom
+            {user.email}
           </button>
           <button onClick={handleLogout}>logout</button>
         </nav>
