@@ -57,7 +57,7 @@ export const getUser = createAsyncThunk(
     if (data?.isSuccess && data?.user) {
       return data.user;
     } else {
-      return 0;
+      return email;
     }
   }
 );
@@ -106,7 +106,9 @@ const authSlice = createSlice({
       state.error = "";
     },
     setUserDetails: (state, { payload }) => {
+      state.user.accessToken = payload.accessToken;
       state.user.name = payload.name;
+      state.user.email = payload.email;
       state.user.role = payload.role;
       state.user.status = payload.status;
       state.user.profile = payload.profile;
@@ -114,6 +116,7 @@ const authSlice = createSlice({
       state.user.stripeCustomerID = payload.stripeCustomerID;
       state.user.selectedPlan = payload.selectedPlan;
       state.user.endDate = payload.endDate;
+      state.user._id = payload._id;
       state.isLoading = false;
       state.isError = false;
       state.error = "";
@@ -182,7 +185,6 @@ const authSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        console.log(payload);
         if (payload._id) {
           state.user.name = payload.name;
           state.user.role = payload.role;
@@ -210,4 +212,5 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { logout, setUser, toggleLoading } = authSlice.actions;
+export const { logout, setUser, toggleLoading, setUserDetails } =
+  authSlice.actions;

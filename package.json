@@ -13,6 +13,7 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
     "@heroicons/react": "^2.0.17",
+    "@material-ui/core": "next",
     "@mui/material": "^5.11.14",
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.3.4",

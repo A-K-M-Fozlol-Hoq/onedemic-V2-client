@@ -12,11 +12,11 @@ import { useRouter } from "next/router";
 const CreateProfile = () => {
   const [studentsInfo, setStudentsInfo] = useState({
     name: "",
-    image: "dfg",
+    image: "",
   });
   const [teachersInfo, setTeachersInfo] = useState({
     name: "",
-    image: "dfg",
+    image: "",
   });
   const [role, setRole] = useState("");
   const { push } = useRouter();
@@ -51,7 +51,7 @@ const CreateProfile = () => {
 
   const handleCreateProfile = async (e) => {
     e.preventDefault();
-
+    console.log({ studentsInfo }, { teachersInfo }, { role });
     if (role === "student" && !(studentsInfo.name && studentsInfo.image)) {
       notify("Please enter your name and profile picture properly", "error");
       return;

@@ -20,13 +20,14 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const links = [
-  {
-    href: "/dashboard",
-    text: "Dashboard",
-    icon: <GrHomeOption />,
-  },
+  // {
+  //   href: "/dashboard",
+  //   text: "Dashboard",
+  //   icon: <GrHomeOption />,
+  // },
   {
     href: "/manage-profile",
     text: "Manage Profile",
@@ -58,7 +59,7 @@ const links = [
     icon: <TbTools />,
   },
   {
-    href: "/manage-resule",
+    href: "/manage-result",
     text: "Result Management",
     icon: <MdOutlineSsidChart />,
   },
@@ -79,7 +80,15 @@ const links = [
   },
 ];
 
-export default function TeacherLayout({ children }) {
+export default function TeacherDashboardLayout({ children }) {
+  // const { push } = useRouter();
+  const { user } = useSelector((state) => state.auth);
+
+  // useEffect(() => {
+  //   if (user.role !== "student" || user.role !== "teacher") {
+  //     push("/createProfile");
+  //   }
+  // }, []);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -109,7 +118,7 @@ export default function TeacherLayout({ children }) {
         </button>
         <nav className="flex items-center space-x-4">
           <img
-            src={"https://avatars.githubusercontent.com/u/61866994?v=4"}
+            src={user.profile}
             style={{ height: "30px", width: "30px", borderRadius: "50%" }}
             alt=""
           />
@@ -117,7 +126,7 @@ export default function TeacherLayout({ children }) {
             onClick={handleViewProfile}
             style={{ margin: "0 15px 0 5px" }}
           >
-            akmfozlolhoq@gmailcom
+            {user.email}
           </button>
           <button onClick={handleLogout}>logout</button>
         </nav>
@@ -148,7 +157,7 @@ export default function TeacherLayout({ children }) {
 
       <footer className="bg-green-500 text-white py-4 px-6 text-center">
         <p>
-          © {new Date().getFullYear()} EdTech Online Examination. All rights
+          © {new Date().getFullYear()} OneDemic Online Examination. All rights
           reserved.
         </p>
       </footer>

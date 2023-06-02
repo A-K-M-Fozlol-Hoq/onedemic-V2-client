@@ -18,13 +18,16 @@ const CreateProfileCard = (props) => {
         method: "POST",
         body: imageData,
       });
-      const data = await response.json();
+      const jsonResponse = await response.json();
 
-      notify("Image uploaded successfully" + data?.data?.url, "success");
+      notify(
+        "Image uploaded successfully" + jsonResponse?.data?.url,
+        "success"
+      );
 
       setData({
         ...data,
-        image: data?.data?.url || "",
+        image: jsonResponse?.data?.url || "",
       });
     } catch (e) {
       notify(e.message || "Failed to upload imaage", "error");

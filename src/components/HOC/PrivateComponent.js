@@ -9,7 +9,12 @@ import { useRouter } from "next/navigation";
 //internal imports
 import { notify } from "@/helpers/utilsFuctions";
 import auth from "@/firebase/firebase.config";
-import { getUser, logout, setUser } from "@/features/auth/authSlice";
+import {
+  getUser,
+  logout,
+  setUser,
+  setUserDetails,
+} from "@/features/auth/authSlice";
 
 function PrivateComponent({ children }) {
   const dispatch = useDispatch();
@@ -35,16 +40,39 @@ function PrivateComponent({ children }) {
 
   //capture user info at this useEffect
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         if (user.emailVerified) {
-          dispatch(
-            setUser({
-              email: user.email,
-              accessToken: user.accessToken,
-              uid: user.uid,
-            })
+          // dispatch(
+          //   getUser({ accessToken: user.accessToken, email: user.email })
+          // );
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_DEV_URL}/user/getUser/${user.email}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + user.accessToken,
+              },
+            }
           );
+
+          const data = await res.json();
+          if (
+            data?.user?.role === "student" ||
+            data?.user?.role === "teacher"
+          ) {
+            //dispatch details
+            data.user.accessToken = user.accessToken;
+            dispatch(setUserDetails(data?.user));
+          } else {
+            dispatch(
+              setUser({
+                email: user.email,
+                accessToken: user.accessToken,
+                uid: user.uid,
+              })
+            );
+          }
         } else {
           dispatch(
             setUser({
