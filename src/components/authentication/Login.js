@@ -1,95 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-import { googleLogin, loginUser } from "../../features/auth/authSlice";
-import { notify } from "@/helpers/utilsFuctions";
+
+import LoginUI from "./ui/login";
 
 const Login = () => {
-  const { isLoading, email, isError, error } = useSelector(
-    (state) => state.auth
-  );
-  const { register, handleSubmit, reset } = useForm();
-  const { push } = useRouter();
-  const dispatch = useDispatch();
-
-  const onSubmit = ({ email, password }) => {
-    dispatch(loginUser({ email, password }));
-  };
-
-  const handleGoogleLogin = () => {
-    dispatch(googleLogin());
-  };
-
-  useEffect(() => {
-    if (!isLoading && email) {
-      push("/");
-    }
-  }, [isLoading, email, push]);
-
-  useEffect(() => {
-    if (isError && error) {
-      notify(error, "error");
-    }
-  }, [isError, error]);
-
   return (
-    <div className="flex h-screen items-center">
-      <div className="w-1/2">
-        <img src={""} className="h-full w-full" alt="" />
-      </div>
-      <div className="w-1/2 grid place-items-center">
-        <div className="bg-[#FFFAF4] rounded-lg grid place-items-center p-10">
-          <h1 className="mb-10 font-medium text-2xl">Login</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-3">
-              <div className="flex flex-col items-start">
-                <label htmlFor="email" className="ml-5">
-                  Email
-                </label>
-                <input type="email" {...register("email")} id="email" />
-              </div>
-              <div className="flex flex-col items-start">
-                <label htmlFor="password" className="ml-5">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  {...register("password")}
-                />
-              </div>
-              <div className="relative !mt-8">
-                <button
-                  type="submit"
-                  className="font-bold text-white py-3 rounded-full bg-primary w-full text-black"
-                >
-                  Login
-                </button>
-              </div>
-              <div>
-                <p>
-                  Don&apos;t have an account?{" "}
-                  <span
-                    className="text-primary hover:underline cursor-pointer"
-                    onClick={() => push("/signup")}
-                  >
-                    Sign up
-                  </span>
-                </p>
-              </div>
-            </div>
-          </form>
-
-          <button
-            onClick={handleGoogleLogin}
-            className="font-bold text-white py-3 rounded-full bg-primary w-full text-black"
-          >
-            Login with GOOGLE
-          </button>
-        </div>
-      </div>
+    <div className="bg-[url('https://images.unsplash.com/photo-1605106715994-18d3fecffb98?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=663&q=80')] bg-repeat-x">
+      <LoginUI />
     </div>
   );
 };

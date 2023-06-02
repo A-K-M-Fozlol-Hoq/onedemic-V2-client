@@ -1,7 +1,7 @@
 //external imports
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 //internal imports
 import Signup from "@/components/authentication/Signup";
