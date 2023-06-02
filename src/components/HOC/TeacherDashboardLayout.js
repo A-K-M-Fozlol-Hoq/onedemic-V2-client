@@ -157,7 +157,7 @@ export default function TeacherDashboardLayout({ children }) {
 
       <footer className="bg-green-500 text-white py-4 px-6 text-center">
         <p>
-          © {new Date().getFullYear()} EdTech Online Examination. All rights
+          © {new Date().getFullYear()} OneDemic Online Examination. All rights
           reserved.
         </p>
       </footer>
