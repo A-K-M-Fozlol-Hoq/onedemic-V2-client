@@ -1,5 +1,4 @@
 //external imports
-import React from "react";
 
 //internal imports
 import { notify } from "@/helpers/utilsFuctions";
@@ -62,14 +61,20 @@ const CreateProfileCard = (props) => {
           id="image"
           accept="image/*"
           onChange={(e) => handleFileUpload(e.target.files[0])}
+          className="cursor-pointer block w-full text-sm text-slate-50
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-full file:border-0
+          file:text-sm file:font-semibold
+          file:bg-violet-50 file:text-indigo-800
+          hover:file:bg-violet-100"
         />
       </div>
       <button
-        className="bg-white text-blue-500 font-bold py-2 px-4 rounded-lg"
+        className="bg-white text-blue-500 font-bold py-2 px-4 rounded-lg mt-5 w-full capitalize"
         type="submit"
         onClick={() => setRole(role)}
       >
-        Create Student Profile
+        Create {role} Profile
       </button>
     </form>
   );

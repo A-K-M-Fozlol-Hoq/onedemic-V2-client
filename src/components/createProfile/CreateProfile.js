@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //internal imports
-import CreateProfileCard from "./CreateProfileCard";
-import { notify } from "@/helpers/utilsFuctions";
 import { useRegisterMutation } from "@/features/auth/authApi";
 import { getUser } from "@/features/auth/authSlice";
+import { notify } from "@/helpers/utilsFuctions";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useRouter } from "next/router";
+import CreateProfileCard from "./CreateProfileCard";
 
 const CreateProfile = () => {
+  const [selectedRole, setSelectedRole] = useState("student");
   const [studentsInfo, setStudentsInfo] = useState({
     name: "",
     image: "",
@@ -101,31 +103,53 @@ const CreateProfile = () => {
   };
 
   return (
-    <div style={{ marginTop: "200px" }}>
-      <div className="flex justify-center space-x-4">
-        <div className="bg-blue-500 p-4 rounded-lg">
-          <h2 className="text-white font-bold mb-2">
-            Create Profile as Student
-          </h2>
-          <CreateProfileCard
-            handleCreateProfile={handleCreateProfile}
-            data={studentsInfo}
-            setData={setStudentsInfo}
-            role="student"
-            setRole={setRole}
-          ></CreateProfileCard>
+    <div className="h-screen flex justify-center items-center bg-[url('https://images.pexels.com/photos/434337/pexels-photo-434337.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-no-repeat bg-cover">
+      <div className="block">
+        <div className="w-full flex justify-center">
+          <ToggleButtonGroup
+            color="primary"
+            value={selectedRole}
+            className="bg-gray-50 rounded-lg"
+            onChange={(e) => setSelectedRole(e.target.value)}
+            exclusive
+            aria-label="Platform"
+          >
+            <ToggleButton value="student" className="px-14">
+              Student
+            </ToggleButton>
+            <ToggleButton value="teacher" className="px-14">
+              Teacher
+            </ToggleButton>
+          </ToggleButtonGroup>
         </div>
-        <div className="bg-blue-500 p-4 rounded-lg">
-          <h2 className="text-white font-bold mb-2">
-            Create Profile as Teacher
-          </h2>
-          <CreateProfileCard
-            handleCreateProfile={handleCreateProfile}
-            data={teachersInfo}
-            setData={setTeachersInfo}
-            role="teacher"
-            setRole={setRole}
-          ></CreateProfileCard>
+        <div className="block md:flex justify-center gap-8 mt-4">
+          {selectedRole === "student" ? (
+            <div className="bg-gradient-to-r from-indigo-600 to-indigo-500 py-8 px-10 rounded-lg">
+              <h2 className="text-white text-lg font-bold mb-2">
+                Create Profile as Student
+              </h2>
+              <CreateProfileCard
+                handleCreateProfile={handleCreateProfile}
+                data={studentsInfo}
+                setData={setStudentsInfo}
+                role="student"
+                setRole={setRole}
+              ></CreateProfileCard>
+            </div>
+          ) : (
+            <div className="bg-gradient-to-r from-blue-500 to-sky-600 py-8 px-10 rounded-lg">
+              <h2 className="text-white text-lg font-bold mb-2">
+                Create Profile as Teacher
+              </h2>
+              <CreateProfileCard
+                handleCreateProfile={handleCreateProfile}
+                data={teachersInfo}
+                setData={setTeachersInfo}
+                role="teacher"
+                setRole={setRole}
+              ></CreateProfileCard>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -43,17 +43,25 @@ const SignupUI = () => {
     dispatch(googleLogin());
   };
   return (
-    <div className="flex h-screen items-center pt-14">
-      <div className="w-4/6 items-center flex justify-center">
+    <div className="block md:flex h-screen items-center justify-center pt-14">
+      <div className="w-1/2 items-center hidden md:flex justify-end">
         <div>
-          <h2 className="text-6xl font-black">Welcome to</h2>
+          <h2 className="text-xl sm:text-2xl md:text-6xl font-black">
+            Welcome to
+          </h2>
           {"\n"}
-          <h2 className="text-9xl font-black">OneDemic</h2>
+          <h2 className="texxt-2xl sm:text-3xl md:text-9xl font-black">
+            OneDemic
+          </h2>
         </div>
       </div>
-      <div className="w-1/3 grid place-items-center">
-        <div className="backdrop-blur-sm bg-white/30 rounded-lg grid place-items-center p-10 drop-shadow-lg">
-          <h1 className="mb-10 font-medium text-2xl">Signup</h1>
+      <div className="w-full md:w-1/2 grid place-items-center">
+        <div className="backdrop-blur-sm bg-white/30 rounded-lg grid place-items-center py-10 px-12 drop-shadow-lg">
+          <h1 className="hidden md:block mb-10 font-medium text-2xl">Signup</h1>
+          <h1 className="block md:hidden  text-2xl">Create new account</h1>
+          <h1 className="block md:hidden mb-10 font-bold text-4xl">
+            @OneDemic
+          </h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-3">
               <div className="flex flex-col items-start">
@@ -95,7 +103,7 @@ const SignupUI = () => {
               <div className="!mt-8 ">
                 <button
                   type="submit"
-                  className="font-bold text-black py-3 rounded-lg w-full disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  className="font-bold text-white py-3 rounded-lg w-full bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
                   disabled={disabled}
                 >
                   Sign up
@@ -117,7 +125,7 @@ const SignupUI = () => {
           </form>
           <button
             onClick={handleGoogleLogin}
-            className="bg-slate-100 border flex justify-center text-xl px-4 py-3 rounded-lg bg-primary w-full mt-4"
+            className="bg-slate-100 border flex justify-center text-2xl px-4 py-3 rounded-lg bg-primary w-full mt-4"
           >
             <FcGoogle />
           </button>

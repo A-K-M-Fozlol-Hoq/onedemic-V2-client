@@ -1,13 +1,13 @@
 //external imports
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //internal imports
+import { logout } from "@/features/auth/authSlice";
 import auth from "@/firebase/firebase.config";
 import { notify } from "@/helpers/utilsFuctions";
 import { useRouter } from "next/router";
-import { logout } from "@/features/auth/authSlice";
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -67,9 +67,16 @@ const Index = () => {
   };
 
   return (
-    <div>
-      <h1>Verify your profile</h1>
-      <button onClick={handleSendEmail}>send email</button>
+    <div className="h-screen flex justify-center items-center bg-[url('https://images.unsplash.com/photo-1604079628040-94301bb21b91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80')] bg-no-repeat bg-cover">
+      <div className="p-24 backdrop-blur-md bg-white/20 rounded-lg">
+        <h1 className="text-4xl font-semibold">Verify Your Profile</h1>
+        <button
+          onClick={handleSendEmail}
+          className="px-6 py-3 mt-5 bg-indigo-800 hover:bg-indigo-600 active:bg-indigo-700 focus:outline-none focus:ring focus:ring-teal-400 text-2xl text-white font-semibold rounded-lg w-full"
+        >
+          Send Email
+        </button>
+      </div>
     </div>
   );
 };
