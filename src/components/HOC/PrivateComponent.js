@@ -15,6 +15,7 @@ import {
   setUser,
   setUserDetails,
 } from "@/features/auth/authSlice";
+import { CircularProgress } from "@mui/material";
 
 function PrivateComponent({ children }) {
   const dispatch = useDispatch();
@@ -95,7 +96,12 @@ function PrivateComponent({ children }) {
     return <>{children}</>;
   } else {
     // @todo: design a loading component and use that component instead of just using this loading h1 tag
-    return <h1>Loading...</h1>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <CircularProgress color="primary" />
+        <p style={{ textAlign: "center", fontSize: 35 }}>Loading...</p>
+      </div>
+    );
   }
 }
 
