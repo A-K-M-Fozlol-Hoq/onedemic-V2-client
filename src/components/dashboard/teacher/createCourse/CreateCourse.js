@@ -12,14 +12,14 @@ import {
 import { blue, green } from "@mui/material/colors";
 
 const containerStyle = {
-  height: "100vh",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   background: "#f0f9ff",
+  padding: "25px",
 };
 
-const InputForm = () => {
+const CreateCourse = () => {
   const [coursePhoto, setCoursePhoto] = useState(null);
   const [courseName, setCourseName] = useState("");
   const [courseCode, setCourseCode] = useState("");
@@ -46,7 +46,12 @@ const InputForm = () => {
   };
 
   return (
-    <Container style={containerStyle}>
+    <Container
+      sx={{ minHeight: "90vh", marginTop: "5vh", minWidth: "70%" }}
+      // md={{ height: "60vh", marginTop: "20vh" }}
+      maxWidth="sm"
+      style={containerStyle}
+    >
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Grid container spacing={2}>
@@ -127,6 +132,7 @@ const InputForm = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              width: "100%",
             }}
           >
             {coursePhoto && (
@@ -134,8 +140,8 @@ const InputForm = () => {
                 src={coursePhoto}
                 alt="Course"
                 style={{
-                  maxWidth: "100%",
-                  maxHeight: "200px",
+                  width: "100%",
+                  maxWidth: "300px",
                   borderRadius: "10px",
                   marginBottom: "10px",
                 }}
@@ -153,4 +159,4 @@ const InputForm = () => {
   );
 };
 
-export default InputForm;
+export default CreateCourse;
