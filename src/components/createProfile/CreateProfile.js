@@ -48,6 +48,7 @@ const CreateProfile = () => {
     }
     if (isSuccess && data?.isSuccess) {
       notify("Profile created successfully!", "success");
+      push("/manage-profile");
     }
   }, [isError, error, isSuccess, data]);
 

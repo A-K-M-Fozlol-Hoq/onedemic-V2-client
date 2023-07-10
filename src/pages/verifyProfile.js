@@ -24,7 +24,7 @@ const Index = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         if (user.emailVerified) {
-          push("/createProfile");
+          push("/create-profile");
         }
       } else {
         dispatch(logout());
