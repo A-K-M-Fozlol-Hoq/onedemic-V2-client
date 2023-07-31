@@ -11,19 +11,19 @@ import { useRouter } from "next/router";
 
 const Index = () => {
   const dispatch = useDispatch();
-  const {
-    user: { email, role },
-  } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const email = user?.email;
+  const role = user?.role;
   const { push } = useRouter();
 
   if (email && role) {
-    push("/dashboard");
+    push("/dashboard/manage-profile");
   }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        if (user.emailVerified) {
+        if (user?.emailVerified) {
           push("/create-profile");
         }
       } else {
@@ -36,13 +36,13 @@ const Index = () => {
   const handleSendEmail = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        if (user.emailVerified) {
+        if (user?.emailVerified) {
           //user is already verified, no need to do anything
         } else {
           sendEmailVerification(user)
             .then(() => {
               notify(
-                "Email send successful, please check your inbox" + user.email,
+                "Email send successful, please check your inbox " + user?.email,
                 "success"
               );
             })

@@ -13,11 +13,11 @@ const Index = () => {
   const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
 
-  if (user.role !== "student" && user.role !== "teacher") {
+  if (user?.role !== "student" && user?.role !== "teacher") {
     push("/");
   }
 
-  console.log({ user: user.role });
+  console.log({ user: user?.role });
   if (user.role === "student") {
     return (
       <StudentDashboardLayout>

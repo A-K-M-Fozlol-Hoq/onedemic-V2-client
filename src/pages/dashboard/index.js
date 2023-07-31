@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import PrivateComponent from "../../components/HOC/PrivateComponent";
 
 const Index = () => {
-  const {
-    user: { email, role },
-  } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const email = user?.email;
+  const role = user?.role;
   return (
     <PrivateComponent>
       <div>hello world</div>

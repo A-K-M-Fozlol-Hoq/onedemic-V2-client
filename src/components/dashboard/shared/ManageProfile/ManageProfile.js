@@ -48,7 +48,7 @@ const ManageProfile = () => {
 
     axios
       .put(
-        `${process.env.NEXT_PUBLIC_DEV_URL}/user/update-user-name-and-profile/${user.email}`,
+        `${process.env.NEXT_PUBLIC_DEV_URL}/user/update-user-name-and-profile/${user?.email}`,
         body,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },

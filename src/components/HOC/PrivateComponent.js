@@ -20,9 +20,9 @@ import { CircularProgress } from "@mui/material";
 function PrivateComponent({ children }) {
   const dispatch = useDispatch();
   const { push } = useRouter();
-  const {
-    user: { accessToken, email, role },
-  } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const accessToken = user?.accessToken;
+  const email = user?.email;
 
   // if (accessToken && email && !role) {
   //   dispatch(getUser({ accessToken, email }));
@@ -43,12 +43,12 @@ function PrivateComponent({ children }) {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        if (user.emailVerified) {
+        if (user?.emailVerified) {
           // dispatch(
           //   getUser({ accessToken: user.accessToken, email: user.email })
           // );
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_DEV_URL}/user/getUser/${user.email}`,
+            `${process.env.NEXT_PUBLIC_DEV_URL}/user/getUser/${user?.email}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -68,16 +68,17 @@ function PrivateComponent({ children }) {
           } else {
             dispatch(
               setUser({
-                email: user.email,
+                email: user?.email,
                 accessToken: user.accessToken,
                 uid: user.uid,
               })
             );
+            push("/create-profile");
           }
         } else {
           dispatch(
             setUser({
-              email: user.email,
+              email: user?.email,
               accessToken: user.accessToken,
               uid: user.uid,
             })
@@ -90,7 +91,7 @@ function PrivateComponent({ children }) {
         push("/login");
       }
     });
-  }, [push, dispatch]);
+  }, []);
 
   if (email && accessToken) {
     return <>{children}</>;

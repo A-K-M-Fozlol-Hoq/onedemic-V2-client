@@ -5,12 +5,8 @@ import Head from "next/head";
 import LandingPage from "@/components/home/LandingPage";
 import Footer from "@/components/shared/footer/Footer";
 import Navbar from "@/components/shared/navbar/Navbar";
-import { useSelector } from "react-redux";
 
 export default function Home() {
-  const { name, email, role, profile, status } = useSelector(
-    (state) => state.auth
-  );
   return (
     <div className="h-screen">
       <Head>
@@ -22,7 +18,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar name={name} role={role} email={email} />
+      <Navbar />
       <main className="grow">
         <LandingPage></LandingPage>
       </main>

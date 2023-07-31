@@ -3,7 +3,7 @@ import TeacherDashboardLayout from "@/components/HOC/TeacherDashboardLayout";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
-import ManageProfile from "./ManageProfile";
+import ViewCourses from "./ViewCourses";
 
 const Index = () => {
   const { push } = useRouter();
@@ -15,13 +15,13 @@ const Index = () => {
   if (user.role === "student") {
     return (
       <StudentDashboardLayout>
-        <ManageProfile></ManageProfile>
+        <ViewCourses />
       </StudentDashboardLayout>
     );
   } else {
     return (
       <TeacherDashboardLayout>
-        <ManageProfile></ManageProfile>
+        <ViewCourses redirectDetails={true} />
       </TeacherDashboardLayout>
     );
   }

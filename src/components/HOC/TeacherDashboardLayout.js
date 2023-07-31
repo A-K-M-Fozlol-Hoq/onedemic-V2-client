@@ -126,7 +126,7 @@ export default function TeacherDashboardLayout({ children }) {
             onClick={handleViewProfile}
             style={{ margin: "0 15px 0 5px" }}
           >
-            {user.email}
+            {user?.email}
           </button>
           <button onClick={handleLogout}>logout</button>
         </nav>

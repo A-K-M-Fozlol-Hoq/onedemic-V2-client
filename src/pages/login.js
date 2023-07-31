@@ -12,8 +12,9 @@ const Index = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log({ user });
       if (user?.email) {
-        push("/dashboard");
+        push("/dashboard/manage-profile");
       }
     });
   }, [push]);

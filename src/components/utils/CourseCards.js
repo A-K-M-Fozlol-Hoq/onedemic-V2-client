@@ -8,10 +8,10 @@ import {
   Switch,
 } from "@material-ui/core";
 
-const CourseSection = () => {
+const CourseCards = ({ courses, redirectDetails = false }) => {
   return (
     <section className="flex flex-wrap justify-center mt-8">
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((course) => (
+      {courses.map((course) => (
         <Card
           key={course}
           className="w-64 md:w-96 mx-4 my-2 bg-blue-100 rounded-lg shadow-md"
@@ -20,21 +20,23 @@ const CourseSection = () => {
             <CardMedia
               component="img"
               alt="Course Photo"
-              image="https://avatars.githubusercontent.com/u/61866994?v=4"
+              image={course.photo}
               className="w-full h-48 object-cover rounded-md"
             />
-            <Typography variant="h6" align="center" gutterBottom>
-              Course {course}
+            <Typography variant="h6" mt={2} align="center" gutterBottom>
+              Course {course.name}
             </Typography>
-            <Button variant="contained" color="primary" className="mt-4">
-              Enroll Now
-            </Button>
-            <div className="flex items-center mt-2">
+            {redirectDetails && (
+              <Button variant="contained" color="primary" className="mt-4">
+                View Details
+              </Button>
+            )}
+            {/* <div className="flex items-center mt-2">
               <Switch color="primary" />
               <Typography variant="body2" className="ml-2">
                 Enable Auto Enroll
               </Typography>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       ))}
@@ -42,4 +44,4 @@ const CourseSection = () => {
   );
 };
 
-export default CourseSection;
+export default CourseCards;

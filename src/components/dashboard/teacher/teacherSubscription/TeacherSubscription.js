@@ -1,10 +1,34 @@
 //external imports
+import { notify } from "@/helpers/utilsFuctions";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import { FaAngleRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const TeacherSubscription = () => {
+  const { user } = useSelector((state) => state.auth);
   const createSession = async (priceId) => {
     console.log("creating session");
+    try {
+      const data = await axios.post(
+        `${process.env.NEXT_PUBLIC_DEV_URL}/stripe/create-session`,
+        {
+          priceId,
+          email: user?.email,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.accessToken}` },
+        }
+      );
+      const url = data?.data?.session?.url;
+      // console.log(data, 123);
+      window.location.href = url;
+    } catch (e) {
+      notify(
+        e.message ||
+          "something went wrong , please try again or contact us at hey.onedemic@gmail.com",
+        "error"
+      );
+    }
   };
 
   return (

@@ -1,56 +1,36 @@
 //external imports
+import { notify } from "@/helpers/utilsFuctions";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import axios from "axios";
 import { FaAngleRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const StudentSubscription = () => {
+  const { user } = useSelector((state) => state.auth);
   const createSession = async (priceId) => {
     console.log("creating session");
     try {
-      const { data: response } = await axios.post(
-        `${BASE_URL}api/v1/stripe/createSession`,
+      const data = await axios.post(
+        `${process.env.NEXT_PUBLIC_DEV_URL}/stripe/create-session`,
         {
           priceId,
-          email: dbUser.email,
+          email: user?.email,
         },
         {
-          headers: { Authorization: `Bearer ${dbUser.token}` },
+          headers: { Authorization: `Bearer ${user.accessToken}` },
         }
       );
-      const url = response?.session?.url;
-      // console.log(response.session, 123);
+      const url = data?.data?.session?.url;
+      // console.log(data, 123, url);
       window.location.href = url;
     } catch (e) {
-      toast(
-        "something went wrong , please try again or contact us at hey@tweetsy.io",
-        {
-          autoClose: 5000,
-          type: "warning",
-        }
+      notify(
+        e.message ||
+          "something went wrong , please try again or contact us at hey.onedemic@gmail.com",
+        "error"
       );
     }
   };
-  // const createSession = async (priceId) => {
-  //   axios
-  //     .put(`${process.env.NEXT_PUBLIC_DEV_URL}/stripe/create-session`, body, {
-  //       headers: { Authorization: `Bearer ${user.accessToken}` },
-  //     })
-  //     .then((data) => {
-  //       const newUser = { ...user };
-  //       newUser.name = name;
-  //       newUser.profile = image;
-  //       console.log({ newUser }, name, image, 1234);
-  //       dispatch(setUserDetails(newUser));
-  //       notify("Name and profile updated successfully", "success");
-  //     })
-  //     .catch(async (e) => {
-  //       console.log(e);
-  //       notify(
-  //         e.message || "Failed to update name and profile picture",
-  //         "error"
-  //       );
-  //     });
-  // };
 
   return (
     <Card className="max-w-xs mx-auto">

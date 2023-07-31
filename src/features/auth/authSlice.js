@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 
 //internal imports
@@ -70,6 +71,10 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk("auth/logout", async (thunkAPI) => {
+  await signOut(auth);
+});
+
 export const googleLogin = createAsyncThunk("auth/googleLogin", async () => {
   const googleProvider = new GoogleAuthProvider();
   const data = await signInWithPopup(auth, googleProvider);
@@ -80,23 +85,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.user = {
-        name: "",
-        email: "",
-        role: "",
-        status: "",
-        profile: "",
-        uid: "",
-        stripeCustomerID: "",
-        selectedPlan: "",
-        endDate: "",
-        usedCreditToday: 0,
-        accessToken: "",
-        uid: "",
-        _id: "",
-      };
-    },
     setUser: (state, { payload }) => {
       state.user.email = payload.email;
       state.user.accessToken = payload.accessToken;
@@ -206,11 +194,55 @@ const authSlice = createSlice({
         state.user.email = "";
         state.isError = true;
         state.error = action.error.message;
+      })
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.error = "";
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = {
+          name: "",
+          email: "",
+          role: "",
+          status: "",
+          profile: "",
+          uid: "",
+          stripeCustomerID: "",
+          selectedPlan: "",
+          endDate: "",
+          usedCreditToday: 0,
+          accessToken: "",
+          uid: "",
+          _id: "",
+        };
+        state.isError = false;
+        state.error = "";
+      })
+      .addCase(logout.rejected, (state) => {
+        state.isLoading = false;
+        state.user = {
+          name: "",
+          email: "",
+          role: "",
+          status: "",
+          profile: "",
+          uid: "",
+          stripeCustomerID: "",
+          selectedPlan: "",
+          endDate: "",
+          usedCreditToday: 0,
+          accessToken: "",
+          uid: "",
+          _id: "",
+        };
+        state.isError = true;
+        state.error = action.error.message;
       });
   },
 });
 
 export default authSlice.reducer;
 
-export const { logout, setUser, toggleLoading, setUserDetails } =
-  authSlice.actions;
+export const { setUser, toggleLoading, setUserDetails } = authSlice.actions;

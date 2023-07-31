@@ -20,7 +20,8 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/features/auth/authSlice";
 
 const links = [
   // {
@@ -71,8 +72,9 @@ const links = [
 ];
 
 export default function StudentDashboardLayout({ children }) {
-  // const { push } = useRouter();
+  const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   // useEffect(() => {
   //   if (user.role !== "student" || user.role !== "teacher") {
   //     push("/createProfile");
@@ -91,6 +93,8 @@ export default function StudentDashboardLayout({ children }) {
 
   const handleLogout = () => {
     // handle logout logic here
+    dispatch(logout());
+    push("/login");
   };
 
   const handleViewProfile = () => {
@@ -115,7 +119,7 @@ export default function StudentDashboardLayout({ children }) {
             onClick={handleViewProfile}
             style={{ margin: "0 15px 0 5px" }}
           >
-            {user.email}
+            {user?.email}
           </button>
           <button onClick={handleLogout}>logout</button>
         </nav>
