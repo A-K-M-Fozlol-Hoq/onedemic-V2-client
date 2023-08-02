@@ -13,6 +13,17 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["coruses"],
     }),
+    enrollCourse: builder.mutation({
+      query: ({ accessToken, data }) => ({
+        url: `/course/enroll-course`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: data,
+      }),
+      invalidatesTags: ["coruses"],
+    }),
     getCourses: builder.query({
       query: ({ accessToken, email }) => ({
         url: `/course/courses/${email}`,
@@ -26,4 +37,8 @@ const courseApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddCourseMutation, useGetCoursesQuery } = courseApi;
+export const {
+  useAddCourseMutation,
+  useGetCoursesQuery,
+  useEnrollCourseMutation,
+} = courseApi;

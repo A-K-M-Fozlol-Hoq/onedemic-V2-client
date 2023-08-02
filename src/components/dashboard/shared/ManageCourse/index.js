@@ -1,9 +1,10 @@
-import StudentDashboardLayout from "@/components/HOC/StudentDashboardLayout";
-import TeacherDashboardLayout from "@/components/HOC/TeacherDashboardLayout";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
-import ViewCourses from "./ViewCourses";
+import StudentDashboardLayout from "@/components/HOC/StudentDashboardLayout";
+import TeacherDashboardLayout from "@/components/HOC/TeacherDashboardLayout";
+import StudentManageCourse from "./student/ManageCourse";
+import TeacherManageCourse from "./teacher/ManageCourse";
 
 const Index = () => {
   const { push } = useRouter();
@@ -15,17 +16,13 @@ const Index = () => {
   if (user.role === "student") {
     return (
       <StudentDashboardLayout>
-        <h1>Enrolled Courses</h1>
-        <ViewCourses />
+        <StudentManageCourse />
       </StudentDashboardLayout>
     );
   } else {
     return (
       <TeacherDashboardLayout>
-        <h1 style={{ textAlign: "center", fontSize: "30", marginTop: "50px" }}>
-          Created Courses
-        </h1>
-        <ViewCourses redirectDetails={true} />
+        <TeacherManageCourse />
       </TeacherDashboardLayout>
     );
   }
