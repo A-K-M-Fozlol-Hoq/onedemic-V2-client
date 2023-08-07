@@ -34,11 +34,22 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["coruses"],
     }),
+    getSingleCourse: builder.query({
+      query: ({ accessToken, courseId }) => ({
+        url: `/course/${courseId}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }),
+      providesTags: ["coruses"],
+    }),
   }),
 });
 
 export const {
   useAddCourseMutation,
   useGetCoursesQuery,
+  useGetSingleCourseQuery,
   useEnrollCourseMutation,
 } = courseApi;
