@@ -9,11 +9,19 @@ import {
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 
-const CourseCards = ({ courses, redirectDetails = false }) => {
+const CourseCards = ({
+  courses,
+  redirectDetails = false,
+  showChat = false,
+}) => {
   const { push } = useRouter();
 
   const redirectManageCourse = (id) => {
     push(`/dashboard/manage-course/${id}`);
+  };
+
+  const redirectMessaging = (id) => {
+    push(`/dashboard/messaging/${id}`);
   };
   return (
     <section className="flex flex-wrap justify-center mt-8">
@@ -40,6 +48,16 @@ const CourseCards = ({ courses, redirectDetails = false }) => {
                 className="mt-4"
               >
                 Manage Course
+              </Button>
+            )}
+            {showChat && (
+              <Button
+                onClick={() => redirectMessaging(course._id)}
+                variant="contained"
+                color="primary"
+                className="mt-4"
+              >
+                Chat
               </Button>
             )}
             {/* <div className="flex items-center mt-2">

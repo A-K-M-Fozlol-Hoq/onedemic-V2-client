@@ -1,14 +1,17 @@
 //external imports
 import React from "react";
+import { useRouter } from "next/router";
 
 //internal imports
 import PrivateComponent from "@/components/HOC/PrivateComponent";
-import SelectCourseToChat from "@/components/dashboard/shared/Messaging/SelectCourseToChat";
+import Messaging from "@/components/dashboard/shared/Messaging/Messaging";
 
 const Index = () => {
+  const router = useRouter();
+  const courseId = router.query.courseId;
   return (
     <PrivateComponent>
-      <SelectCourseToChat />
+      <Messaging courseId={courseId} />
     </PrivateComponent>
   );
 };

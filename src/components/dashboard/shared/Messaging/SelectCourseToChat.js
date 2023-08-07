@@ -1,11 +1,11 @@
-import StudentDashboardLayout from "@/components/HOC/StudentDashboardLayout";
-import TeacherDashboardLayout from "@/components/HOC/TeacherDashboardLayout";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
-import Messaging from "./Messaging";
+import StudentDashboardLayout from "@/components/HOC/StudentDashboardLayout";
+import TeacherDashboardLayout from "@/components/HOC/TeacherDashboardLayout";
+import ViewCourses from "../ViewCourses/ViewCourses";
 
-const Index = ({ courseId }) => {
+const SelectCourseToChat = () => {
   const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
   if (user?.role !== "student" && user?.role !== "teacher") {
@@ -15,16 +15,16 @@ const Index = ({ courseId }) => {
   if (user.role === "student") {
     return (
       <StudentDashboardLayout>
-        <Messaging courseId={courseId}></Messaging>
+        <ViewCourses showChat={true} />
       </StudentDashboardLayout>
     );
   } else {
     return (
       <TeacherDashboardLayout>
-        <Messaging courseId={courseId}></Messaging>
+        <ViewCourses showChat={true} />
       </TeacherDashboardLayout>
     );
   }
 };
 
-export default Index;
+export default SelectCourseToChat;

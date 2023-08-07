@@ -10,11 +10,12 @@ const serverURL = "http://localhost:5000";
 // const socket = io(serverURL); // Initialize Socket.io client
 let socket;
 
-const MessageComponent = () => {
-  const courseId = "64ca377d9cab010d1c3f450a"; // You can get courseId from URL, for now, hardcoding for simplicity
+const MessageComponent = ({ courseId }) => {
+  // const courseId = "64ca377d9cab010d1c3f450a"; // You can get courseId from URL, for now, hardcoding for simplicity
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const scrollbarsRef = useRef();
+  const [isChatLoading, setIsChatLoading] = useState(true);
 
   const {
     user: { accessToken, email, _id, selectedPlan },
@@ -60,7 +61,13 @@ const MessageComponent = () => {
         }
       );
       const data = await response.json();
-      setMessages(data);
+      if (data?.length > 0) {
+        setMessages(data);
+      } else {
+        setMessages([]);
+      }
+      setIsChatLoading(false);
+
       scrollToBottom(); // Scroll to bottom after messages are loaded
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -101,6 +108,10 @@ const MessageComponent = () => {
   return (
     <Grid container direction="column" alignItems="stretch" justify="flex-end">
       <Grid item xs={12}>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          {!isChatLoading && messages.length === 0 && <i>No messages found!</i>}
+        </div>
+
         <Paper className="p-4">
           <Scrollbars style={{ height: "300px" }} ref={scrollbarsRef}>
             <div className="flex flex-col-reverse">
