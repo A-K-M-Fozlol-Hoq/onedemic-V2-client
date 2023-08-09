@@ -13,6 +13,7 @@ const CourseCards = ({
   courses,
   redirectDetails = false,
   showChat = false,
+  createExam = false,
 }) => {
   const { push } = useRouter();
 
@@ -22,6 +23,9 @@ const CourseCards = ({
 
   const redirectMessaging = (id) => {
     push(`/dashboard/messaging/${id}`);
+  };
+  const redirectCreateExam = (id) => {
+    push(`/dashboard/create-exam/${id}`);
   };
   return (
     <section className="flex flex-wrap justify-center mt-8">
@@ -58,6 +62,16 @@ const CourseCards = ({
                 className="mt-4"
               >
                 Chat
+              </Button>
+            )}
+            {createExam && (
+              <Button
+                onClick={() => redirectCreateExam(course._id)}
+                variant="contained"
+                color="primary"
+                className="mt-4"
+              >
+                Create Exam
               </Button>
             )}
             {/* <div className="flex items-center mt-2">

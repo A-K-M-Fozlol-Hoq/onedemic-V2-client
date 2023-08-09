@@ -3,7 +3,11 @@ import { useGetCoursesQuery } from "@/features/api/course/courseApi";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const ViewCourses = ({ redirectDetails = false, showChat = false }) => {
+const ViewCourses = ({
+  redirectDetails = false,
+  showChat = false,
+  createExam = false,
+}) => {
   const { user } = useSelector((state) => state.auth);
   const { data, isLoading } = useGetCoursesQuery({
     accessToken: user?.accessToken,
@@ -23,6 +27,7 @@ const ViewCourses = ({ redirectDetails = false, showChat = false }) => {
             courses={data.data}
             redirectDetails={redirectDetails}
             showChat={showChat}
+            createExam={createExam}
           />
         </>
       ) : (
