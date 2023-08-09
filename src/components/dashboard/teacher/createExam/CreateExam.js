@@ -227,7 +227,7 @@ const CreateExam = ({ courseId }) => {
         </div>
       )}
 
-      {/* Step 3: Written Exam Input */}
+      {/* Step 2(alt): Written Exam Input */}
       {examType === "written" && (
         <div className="mb-4">
           <h2 className="text-xl font-bold">Upload Written Exam PDF:</h2>
@@ -239,7 +239,7 @@ const CreateExam = ({ courseId }) => {
         </div>
       )}
 
-      {/* Step 4: Exam Start and End Time */}
+      {/* Step 3: Exam Start and End Time */}
       {examType !== "" && (
         <div className="mb-4 mt-10">
           <h2 className="text-xl font-bold">Exam Start and End Time:</h2>
