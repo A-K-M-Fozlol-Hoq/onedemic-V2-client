@@ -68,11 +68,11 @@ const links = [
     text: "subscription",
     icon: <SiProtodotio />,
   },
-  {
-    href: "/dashboard/exams",
-    text: "Exams",
-    icon: <BsFillFileEarmarkLock2Fill />,
-  },
+  // {
+  //   href: "/dashboard/exams",
+  //   text: "Exams",
+  //   icon: <BsFillFileEarmarkLock2Fill />,
+  // },
   {
     href: "/dashboard/view-progress",
     text: "view progress",
@@ -89,7 +89,7 @@ export default function TeacherDashboardLayout({ children }) {
   //     push("/createProfile");
   //   }
   // }, []);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const router = useRouter();
 
   const handleMenuOpen = () => {

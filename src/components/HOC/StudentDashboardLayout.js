@@ -80,7 +80,7 @@ export default function StudentDashboardLayout({ children }) {
   //     push("/createProfile");
   //   }
   // }, []);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const router = useRouter();
 
   const handleMenuOpen = () => {

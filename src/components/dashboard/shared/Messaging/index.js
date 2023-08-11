@@ -3,7 +3,7 @@ import TeacherDashboardLayout from "@/components/HOC/TeacherDashboardLayout";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
-import Messaging from "./Messaging";
+import Messaging from "./MessageComponent";
 
 const Index = ({ courseId }) => {
   const { push } = useRouter();

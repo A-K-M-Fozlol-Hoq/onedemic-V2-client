@@ -5,7 +5,7 @@ const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_DEV_URL,
   }),
-  tags: ["user", "coruses"],
+  tags: ["user", "coruses", "exam", "exams"],
   endpoints: (builder) => ({}),
 });
 

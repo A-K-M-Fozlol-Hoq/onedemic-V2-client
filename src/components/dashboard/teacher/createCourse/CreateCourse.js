@@ -93,17 +93,6 @@ const CreateCourse = () => {
     };
     console.log({ accessToken: user.accessToken, data });
     addCourse({ accessToken: user.accessToken, data });
-    // name, teacherId, code, photo, autoEnroll
-    // const response = await axios.get(
-    //   `${process.env.NEXT_PUBLIC_DEV_URL}/course/is-code-available/${value}`,
-    //   {
-    //     headers: { Authorization: `Bearer ${user.accessToken}` },
-    //   }
-    // );
-    // console.log(response?.data, response.data.isSuccess);
-    // if (response?.data?.available) {
-    //   notify("Course Created Successfully", "success");
-    // }
   };
 
   // Debounce function implementation
