@@ -27,7 +27,7 @@ const ViewExams = ({ courseId }) => {
       </div>
     );
   }
-  if (data.data?.length) {
+  if (data?.data?.length) {
     if (selectExam?._id) {
       return <StartExam exam={selectExam} />;
     } else {

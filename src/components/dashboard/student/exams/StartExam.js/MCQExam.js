@@ -30,7 +30,6 @@ const MCQExam = ({ examDetails }) => {
   };
 
   const handleSubmit = () => {
-    setShowSubmitButton(true);
     const completedMCQs = Object.entries(selectedOptions).map(
       ([index, option]) => ({
         questionId: examDetails.mcqQuestions[index]._id,
@@ -38,8 +37,20 @@ const MCQExam = ({ examDetails }) => {
         selectedOption: option,
       })
     );
+    if (completedMCQs.length < examDetails.mcqQuestions.length) {
+      const message = `You missed ${
+        examDetails.mcqQuestions.length - completedMCQs.length
+      } mcq question(s) out of ${examDetails.mcqQuestions.length} question(s)`;
+      notify(message, "warning");
+    }
 
-    console.log("Completed MCQs:", completedMCQs);
+    if (completedMCQs.length === 0) {
+      notify("You have to select at least one answer to save", "error");
+      return;
+    }
+    setShowSubmitButton(true);
+
+    // console.log("Completed MCQs:", completedMCQs);
     // alert("Successfully completed exam");
   };
   const submitExam = async () => {
@@ -50,6 +61,12 @@ const MCQExam = ({ examDetails }) => {
         selectedOption: option,
       })
     );
+    const currentTime = new Date();
+    const endDateTime = new Date(examDetails?.endDateTime);
+    if (currentTime > endDateTime) {
+      notify("You can't submit answers as the exam time is over.", "error");
+      return;
+    }
     const bodyDate = {
       studentId: user?._id,
       examId: examDetails._id,
@@ -57,22 +74,22 @@ const MCQExam = ({ examDetails }) => {
       answeredMcqs: completedMCQs,
     };
 
-    // try {
-    //   const response = await axios.post(
-    //     `${process.env.NEXT_PUBLIC_DEV_URL}/result/save-mcq`,
-    //     bodyDate,
-    //     {
-    //       headers: { Authorization: `Bearer ${user.accessToken}` },
-    //     }
-    //   );
-    //   notify("MCQ submitted successfully", "success");
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DEV_URL}/result/save-mcq`,
+        bodyDate,
+        {
+          headers: { Authorization: `Bearer ${user.accessToken}` },
+        }
+      );
+      notify("MCQ submitted successfully", "success");
 
-    //   console.log("Completed MCQs:", completedMCQs);
-    // } catch (err) {
-    //   const errorMessage =
-    //     err?.response?.data?.message || "Something went wrong";
-    //   notify(errorMessage, "error");
-    // }
+      // console.log("Completed MCQs:", completedMCQs);
+    } catch (err) {
+      const errorMessage =
+        err?.response?.data?.message || "Something went wrong";
+      notify(errorMessage, "error");
+    }
   };
 
   return (
@@ -114,9 +131,6 @@ const MCQExam = ({ examDetails }) => {
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded"
               onClick={handleNext}
-              // disabled={
-              //   currentQuestionIndex === examDetails.mcqQuestions.length - 1
-              // }
             >
               Next
             </button>
@@ -125,7 +139,6 @@ const MCQExam = ({ examDetails }) => {
             <button
               className="px-4 py-2 bg-green-500 text-white rounded"
               onClick={handleSubmit}
-              // disabled={!allQuestionsAnswered}
             >
               Save
             </button>

@@ -25,7 +25,7 @@ const MCQForm = ({ numOfMCQs, setMcqQuestions }) => {
       }
     );
     const responseData = resonse.data.data;
-    if (resonse?.data?.isSuccess && resonse.data.data?.length > 0) {
+    if (resonse?.data?.isSuccess && resonse.data?.data?.length > 0) {
       setSuggestions(responseData);
     } else {
       setSuggestions([]);
