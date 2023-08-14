@@ -20,7 +20,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/features/auth/authSlice";
 
 const links = [
   // {
@@ -84,6 +86,7 @@ export default function TeacherDashboardLayout({ children }) {
   const dispatch = useDispatch();
   const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   if (user.role !== "student" || user.role !== "teacher") {
@@ -104,7 +107,7 @@ export default function TeacherDashboardLayout({ children }) {
   const handleLogout = () => {
     // handle logout logic here
     dispatch(logout());
-    push("/");
+    push("/login");
   };
 
   const handleViewProfile = () => {
