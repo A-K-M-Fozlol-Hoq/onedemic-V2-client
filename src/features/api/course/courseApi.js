@@ -44,6 +44,16 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["coruses"],
     }),
+    removeStudent: builder.mutation({
+      query: ({ accessToken, data }) => ({
+        url: `/course/remove-student`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -52,4 +62,5 @@ export const {
   useGetCoursesQuery,
   useGetSingleCourseQuery,
   useEnrollCourseMutation,
+  useRemoveStudentMutation,
 } = courseApi;

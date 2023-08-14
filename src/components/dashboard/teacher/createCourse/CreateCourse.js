@@ -1,6 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState, useRef, useEffect } from "react";
+import { useAddCourseMutation } from "@/features/api/course/courseApi";
+import { notify } from "@/helpers/utilsFuctions";
 import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
   Container,
   FormControl,
   FormControlLabel,
@@ -8,13 +13,12 @@ import {
   InputLabel,
   Switch,
   TextField,
-  Button,
+  Typography,
 } from "@mui/material";
 import { blue, green } from "@mui/material/colors";
-import { notify } from "@/helpers/utilsFuctions";
 import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useAddCourseMutation } from "@/features/api/course/courseApi";
 
 const containerStyle = {
   display: "flex",
@@ -200,7 +204,7 @@ const CreateCourse = () => {
             </Grid>
             <Grid item xs={12}>
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 onClick={handleSubmit}
                 disabled={
@@ -213,31 +217,22 @@ const CreateCourse = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={6}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
+          <div>
             {coursePhoto && (
-              <img
-                src={coursePhoto}
-                alt="Course"
-                style={{
-                  width: "100%",
-                  maxWidth: "300px",
-                  borderRadius: "10px",
-                  marginBottom: "10px",
-                }}
-              />
+              <Card sx={{ maxWidth: 500 }}>
+                <CardMedia
+                  sx={{ height: 140, width: 500 }}
+                  image={coursePhoto}
+                  title="coursePhoto"
+                />
+                <CardContent className="bg-gray-800 text-white font-bold">
+                  <Typography gutterBottom variant="h5" component="div">
+                    {courseName}
+                  </Typography>
+                  <Typography variant="body2">{courseCode}</Typography>
+                </CardContent>
+              </Card>
             )}
-            <div>
-              <p>Course Name: {courseName}</p>
-              <p>Course Code: {courseCode}</p>
-              <p>Auto Enroll: {autoEnroll ? "True" : "False"}</p>
-            </div>
           </div>
         </Grid>
       </Grid>

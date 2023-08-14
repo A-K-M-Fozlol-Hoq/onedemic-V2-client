@@ -1,21 +1,7 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Card,
-  CardContent,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
-} from "@material-ui/core";
-import axios from "axios";
 import { notify } from "@/helpers/utilsFuctions";
+import { Button, TextField } from "@material-ui/core";
+import axios from "axios";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import MCQForm from "./MCQForm";
 
@@ -29,6 +15,7 @@ const CreateExam = ({ courseId }) => {
   const [numOfMCQs, setNumOfMCQs] = useState(0);
   const [examName, setExamName] = useState("");
   const [showInputNumber, setShowInputNumber] = useState(true);
+
   const handleFileChange = async (event) => {
     event.preventDefault();
     const newFile = event.target?.files[0];
@@ -140,52 +127,29 @@ const CreateExam = ({ courseId }) => {
   };
 
   return (
-    <div className="w-96 mx-auto p-4">
-      <h1
-        className="text-3xl font-bold mb-5 mt-20"
-        style={{ textAlign: "center" }}
-      >
-        CreateExam
+    <div className="w-96 mx-auto p-7 border border-dashed border-gray-400 rounded-xl my-5">
+      <h1 className="text-3xl font-bold text-center text-gray-800">
+        Create Exam
       </h1>
 
       {/* Step 1: Select Exam Type */}
       {examType === "" && (
-        <div className="mb-4">
-          <h2 className="text-xl font-bold">Select Exam Type:</h2>
-          <RadioGroup
-            aria-label="examType"
-            name="examType"
-            value={examType}
-            onChange={(e) => setExamType(e.target.value)}
-          >
-            <FormControlLabel
-              value="mcq"
-              control={<Radio />}
-              label="MCQ Exam"
-            />
-            <FormControlLabel
-              value="written"
-              control={<Radio />}
-              label="Written Exam"
-            />
-          </RadioGroup>
-          <Button
-            style={{ martinTop: "20px" }}
-            variant="contained"
-            color="primary"
-            onClick={() => setExamType("mcq")}
-          >
-            Continue with MCQ
-          </Button>
-          <br />
-          <Button
-            style={{ martinTop: "20px" }}
-            variant="contained"
-            color="primary"
-            onClick={() => setExamType("written")}
-          >
-            Continue with written
-          </Button>
+        <div className="">
+          <h2 className="text-center my-4">Choose Exam Type</h2>
+          <div className="flex gap-5">
+            <div
+              className="w-48 h-48 flex justify-center items-center bg-slate-200 rounded-3xl hover:bg-slate-300 cursor-pointer"
+              onClick={() => setExamType("mcq")}
+            >
+              <h3 className="text-3xl font-bold text-gray-800">MCQ</h3>
+            </div>
+            <div
+              className="w-48 h-48 flex justify-center items-center bg-slate-200 rounded-3xl hover:bg-slate-300 cursor-pointer"
+              onClick={() => setExamType("written")}
+            >
+              <h3 className="text-3xl font-bold text-gray-800">Written</h3>
+            </div>
+          </div>
         </div>
       )}
 
@@ -198,6 +162,7 @@ const CreateExam = ({ courseId }) => {
                 Enter the number of MCQs to add:
               </h2>
               <TextField
+                className="w-full"
                 type="number"
                 value={numOfMCQs}
                 onChange={(e) => setNumOfMCQs(Number(e.target.value))}
@@ -207,9 +172,9 @@ const CreateExam = ({ courseId }) => {
               />
               <br />
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
-                className="mt-2 mb-5"
+                className="w-full my-1"
                 onClick={handleAddMCQ}
               >
                 Add MCQs
@@ -229,8 +194,8 @@ const CreateExam = ({ courseId }) => {
 
       {/* Step 2(alt): Written Exam Input */}
       {examType === "written" && (
-        <div className="mb-4">
-          <h2 className="text-xl font-bold">Upload Written Exam PDF:</h2>
+        <div className="my-4">
+          <h2 className="text-lg font-bold">Upload Written Exam PDF:</h2>
           <input
             type="file"
             accept="application/pdf"
@@ -244,7 +209,7 @@ const CreateExam = ({ courseId }) => {
         <div className="mb-4 mt-10">
           <h2 className="text-xl font-bold">Exam Start and End Time:</h2>
           <TextField
-            className="mt-5"
+            className="mt-5 w-full"
             type="datetime-local"
             label="Start Time"
             value={examStartTime}
@@ -254,7 +219,7 @@ const CreateExam = ({ courseId }) => {
             }}
           />
           <TextField
-            className="mt-5"
+            className="mt-5 w-full"
             type="datetime-local"
             label="End Time"
             value={examEndTime}
@@ -265,8 +230,7 @@ const CreateExam = ({ courseId }) => {
           />
 
           <TextField
-            className="mt-5"
-            style={{ width: "250px" }}
+            className="mt-5 w-full"
             type="text"
             label="Exam Name"
             value={examName}
@@ -276,11 +240,10 @@ const CreateExam = ({ courseId }) => {
             }}
           />
           <br />
-
           <Button
-            className="mt-10"
-            variant="contained"
-            color="primary"
+            className="mt-4 w-full"
+            variant="outlined"
+            color="success"
             onClick={handleStartExam}
             disabled={
               (examType === "mcq" && !mcqQuestions.length) ||

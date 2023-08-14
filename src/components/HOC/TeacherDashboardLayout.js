@@ -1,16 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useState } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { RiUserSettingsLine, RiFilePaper2Line } from "react-icons/ri";
-import { TfiWrite } from "react-icons/tfi";
-import { BsGrid1X2Fill, BsFillFileEarmarkLock2Fill } from "react-icons/bs";
-import { GrSend, GrHomeOption } from "react-icons/gr";
-import { TbTools, TbChartArrows } from "react-icons/tb";
+import { BsGrid1X2Fill } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { GrSend } from "react-icons/gr";
 import { MdOutlineSsidChart } from "react-icons/md";
+import { RiFilePaper2Line, RiUserSettingsLine } from "react-icons/ri";
 import { SiProtodotio } from "react-icons/si";
+import { TbChartArrows, TbTools } from "react-icons/tb";
+import { TfiWrite } from "react-icons/tfi";
 
+import { logout } from "@/features/auth/authSlice";
 import {
   Drawer,
   List,
@@ -19,8 +20,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const links = [
   // {
@@ -81,7 +81,8 @@ const links = [
 ];
 
 export default function TeacherDashboardLayout({ children }) {
-  // const { push } = useRouter();
+  const dispatch = useDispatch();
+  const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
 
   // useEffect(() => {
@@ -102,6 +103,8 @@ export default function TeacherDashboardLayout({ children }) {
 
   const handleLogout = () => {
     // handle logout logic here
+    dispatch(logout());
+    push("/");
   };
 
   const handleViewProfile = () => {
