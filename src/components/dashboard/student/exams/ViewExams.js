@@ -22,8 +22,10 @@ const ViewExams = ({ courseId }) => {
 
   if (!isLoading && data?.data?.length === 0) {
     return (
-      <div>
-        <h1>No Exam Found For This Course</h1>
+      <div class="flex justify-center items-center h-screen bg-gray-200">
+        <h1 class=" text-center text-gray-800 shadow-lg p-4 rounded-lg bg-white">
+          No Exam Found For This Course!
+        </h1>
       </div>
     );
   }

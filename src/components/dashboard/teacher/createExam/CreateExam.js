@@ -4,14 +4,16 @@ import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import MCQForm from "./MCQForm";
+import { useRouter } from "next/router";
 
 const CreateExam = ({ courseId }) => {
   const { user } = useSelector((state) => state.auth);
+  const { push } = useRouter();
   const [examType, setExamType] = useState(""); // "mcq" or "written"
   const [mcqQuestions, setMcqQuestions] = useState([]);
   const [examStartTime, setExamStartTime] = useState("");
   const [examEndTime, setExamEndTime] = useState("");
-  const [selectedFileID, setSelectedFileID] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [numOfMCQs, setNumOfMCQs] = useState(0);
   const [examName, setExamName] = useState("");
   const [showInputNumber, setShowInputNumber] = useState(true);
@@ -21,22 +23,22 @@ const CreateExam = ({ courseId }) => {
     const newFile = event.target?.files[0];
     if (newFile?.type === "application/pdf") {
       notify("PDF uploading...", "info");
-      const formData = new FormData();
-      formData.append("file", newFile);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_DEV_URL}/pdf/create-pdf`,
-        {
+
+      try {
+        const imageData = new FormData();
+        imageData.set("key", process.env.NEXT_PUBLIC_IMGBB_API_KEY);
+        imageData.append("image", newFile);
+
+        const response = await fetch("https://api.imgbb.com/1/upload", {
           method: "POST",
-          body: formData,
-          headers: { Authorization: `Bearer ${user?.accessToken}` },
-          // user?.accessTOken
-        }
-      );
-      const jsonResponse = await response.json();
-      if (jsonResponse.isSuccess) {
+          body: imageData,
+        });
         notify("File Uploaded Successfully!", "success");
-        console.log(jsonResponse.data?._id, 1234);
-        setSelectedFileID(jsonResponse?.data?._id);
+        const jsonResponse = await response.json();
+        console.log(jsonResponse?.data?.url);
+        setSelectedFile(jsonResponse?.data?.url);
+      } catch (err) {
+        notify("Failed to upload file", "error");
       }
     } else {
       notify("Please Upload PDF file", "error");
@@ -102,7 +104,7 @@ const CreateExam = ({ courseId }) => {
       startDateTime: examStartTime,
       endDateTime: examEndTime,
       examType,
-      questionPaperID: selectedFileID,
+      questionPaper: selectedFile,
       mcqQuestions,
     };
 
@@ -117,6 +119,7 @@ const CreateExam = ({ courseId }) => {
 
       if (response?.data?.isSuccess) {
         notify("Exam scheduled successfully", "success");
+        push("/dashboard/manage-result");
       } else {
         notify("Something went wrong", "error");
       }
@@ -247,7 +250,7 @@ const CreateExam = ({ courseId }) => {
             onClick={handleStartExam}
             disabled={
               (examType === "mcq" && !mcqQuestions.length) ||
-              (examType === "written" && !selectedFileID) ||
+              (examType === "written" && !selectedFile) ||
               !examStartTime ||
               !examEndTime ||
               !examName

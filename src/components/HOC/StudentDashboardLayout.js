@@ -55,20 +55,20 @@ const links = [
     icon: <MdOutlineSsidChart />,
   },
   {
-    href: "/dashboard/subscription",
-    text: "subscription",
-    icon: <SiProtodotio />,
-  },
-  {
     href: "/dashboard/exams",
     text: "Exams",
     icon: <BsFillFileEarmarkLock2Fill />,
   },
   {
-    href: "/dashboard/view-progress",
-    text: "view progress",
-    icon: <TbChartArrows />,
+    href: "/dashboard/subscription",
+    text: "subscription",
+    icon: <SiProtodotio />,
   },
+  // {
+  //   href: "/dashboard/view-progress",
+  //   text: "view progress",
+  //   icon: <TbChartArrows />,
+  // },
 ];
 
 export default function StudentDashboardLayout({ children }) {

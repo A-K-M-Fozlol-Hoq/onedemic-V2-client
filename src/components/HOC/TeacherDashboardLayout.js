@@ -22,7 +22,7 @@ import {
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/features/auth/authSlice";
+// import { logout } from "@/features/auth/authSlice";
 
 const links = [
   // {
@@ -75,18 +75,17 @@ const links = [
   //   text: "Exams",
   //   icon: <BsFillFileEarmarkLock2Fill />,
   // },
-  {
-    href: "/dashboard/view-progress",
-    text: "view progress",
-    icon: <TbChartArrows />,
-  },
+  // {
+  //   href: "/dashboard/view-progress",
+  //   text: "view progress",
+  //   icon: <TbChartArrows />,
+  // },
 ];
 
 export default function TeacherDashboardLayout({ children }) {
   const dispatch = useDispatch();
   const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   if (user.role !== "student" || user.role !== "teacher") {

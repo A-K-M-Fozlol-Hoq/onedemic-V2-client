@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { blue, green } from "@mui/material/colors";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -30,22 +31,25 @@ const containerStyle = {
 
 const CreateCourse = () => {
   const { user } = useSelector((state) => state.auth);
+  const { push } = useRouter();
   const [coursePhoto, setCoursePhoto] = useState(null);
   const [courseName, setCourseName] = useState("");
   const [courseCode, setCourseCode] = useState("");
   const [autoEnroll, setAutoEnroll] = useState(true);
-  const [addCourse, { isError, isSuccess }] = useAddCourseMutation();
+  const [addCourse, { isError, isSuccess, error }] = useAddCourseMutation();
   const photoInputRef = useRef(null);
   const [isCodeAvailable, setIsCodeAvailable] = useState(false);
 
   useEffect(() => {
     if (isError) {
-      notify("Failed to create course", "error");
+      const message = error?.data?.message || "Failed to create course";
+      notify(message, "error");
     }
     if (isSuccess) {
-      notify("Course created successfully", "success");
+      notify("Course created successfully", "success", 5000);
+      push("/dashboard/manage-course");
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, push, error]);
 
   const handlePhotoChange = async (e) => {
     const file = e.target.files[0];
@@ -80,12 +84,12 @@ const CreateCourse = () => {
     console.log("Course Name:", courseName);
     console.log("Course Code:", courseCode);
     console.log("Auto Enroll:", autoEnroll);
-    if (!coursePhoto || !courseName || !courseCode) {
-      notify("Please enter course anme, code and photo properly", "error");
-      return;
+    if (courseCode.length !== 6) {
+      notify("Length of course code must be 6", "error");
     }
-    if (courseCode.length < 6 || courseCode.length > 10) {
-      notify("Length of course code should be between 6 and 10", "error");
+    if (!coursePhoto || !courseName || !courseCode) {
+      notify("Please enter course name, code and photo properly", "error");
+      return;
     }
     console.log(user);
     const data = {
@@ -129,7 +133,9 @@ const CreateCourse = () => {
   const handleCourseCodeChange = (event) => {
     const newValue = event.target.value;
     setCourseCode(newValue);
-    debouncedSendAPIRequest(newValue);
+    if (newValue?.length === 6) {
+      debouncedSendAPIRequest(newValue);
+    }
   };
 
   return (
@@ -155,9 +161,9 @@ const CreateCourse = () => {
                 />
                 <TextField
                   variant="outlined"
-                  value={coursePhoto ? coursePhoto.name : ""}
+                  // value={coursePhoto ? coursePhoto : ""}
                   fullWidth
-                  disabled
+                  // disabled
                   onClick={handlePhotoInputClick}
                   sx={{ "& label.Mui-focused": { color: blue[700] } }}
                 />
@@ -165,7 +171,9 @@ const CreateCourse = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel htmlFor="course-name">Course Name</InputLabel>
+                <InputLabel htmlFor="course-name">
+                  {!courseName && "Course Name"}
+                </InputLabel>
                 <TextField
                   id="course-name"
                   value={courseName}
@@ -178,7 +186,9 @@ const CreateCourse = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel htmlFor="course-code">Course Code</InputLabel>
+                <InputLabel htmlFor="course-code">
+                  {!courseCode && "Course Code"}{" "}
+                </InputLabel>
                 <TextField
                   id="course-code"
                   value={courseCode}

@@ -10,7 +10,7 @@ const examApi = apiSlice.injectEndpoints({
           Authorization: `Bearer ${accessToken}`,
         },
       }),
-      providesTags: ["exams"],
+      // providesTags: ["exams"],
     }),
     getSingleExam: builder.query({
       query: ({ accessToken, examId }) => ({
@@ -20,7 +20,7 @@ const examApi = apiSlice.injectEndpoints({
           Authorization: `Bearer ${accessToken}`,
         },
       }),
-      providesTags: ["exam"],
+      // providesTags: ["exam"],
     }),
   }),
 });

@@ -30,7 +30,7 @@ const CreateProfile = () => {
 
   useEffect(() => {
     if (email && accessToken && selectedPlan) {
-      push("/dashboard");
+      push("/dashboard/manage-profile");
     }
   }, [email, accessToken, selectedPlan, push]);
   const [postUser, { error, isError, data, isSuccess }] = useRegisterMutation();
@@ -50,7 +50,7 @@ const CreateProfile = () => {
       notify("Profile created successfully!", "success");
       push("/dashboard/manage-profile");
     }
-  }, [isError, error, isSuccess, data]);
+  }, [isError, error, isSuccess, data, push]);
 
   const handleCreateProfile = async (e) => {
     e.preventDefault();
