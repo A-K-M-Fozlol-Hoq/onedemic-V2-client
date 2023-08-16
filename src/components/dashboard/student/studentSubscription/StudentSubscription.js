@@ -33,43 +33,39 @@ const StudentSubscription = () => {
   };
 
   return (
-    <Card className="max-w-xs mx-auto">
-      <CardContent>
-        <Typography variant="h5" component="h2" className="text-center mb-4">
-          Subscription Card
-        </Typography>
-        <div className="text-center mb-4">
-          <Typography variant="h6">$19.99</Typography>
-          <Typography variant="subtitle1">Premium</Typography>
-        </div>
-        <ul className="text-left mb-4">
-          <li className="flex items-center">
-            <FaAngleRight className="mr-2" />
-            Feature 1
-          </li>
-          <li className="flex items-center">
-            <FaAngleRight className="mr-2" />
-            Feature 2
-          </li>
-          <li className="flex items-center">
-            <FaAngleRight className="mr-2" />
-            Feature 3
-          </li>
-          <li className="flex items-center">
-            <FaAngleRight className="mr-2" />
-            Feature 4
-          </li>
-        </ul>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={() => createSession("price_1NL5c7HnmJ2HS428ESg3ZI3p")}
-        >
-          Subscribe
-        </Button>
-      </CardContent>
-    </Card>
+    <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div className=" text-center text-gray-800 shadow-lg p-4 rounded-lg bg-white">
+        <Card className="max-w-xs mx-auto bg-slate-200 rounded-xl">
+          <CardContent>
+            <Typography
+              variant="h5"
+              component="h2"
+              className="text-center mb-4"
+            >
+              Subscription Card
+            </Typography>
+            <div className="text-center mb-4">
+              <Typography variant="h6">$5.00</Typography>
+              <Typography variant="subtitle1">Premium</Typography>
+            </div>
+            <ul className="text-left mb-4">
+              <li className="flex items-center">
+                <FaAngleRight className="mr-2" />
+                Get Notifications when teacher creates an exam
+              </li>
+            </ul>
+            <Button
+              variant="outlined"
+              color="primary"
+              fullWidth
+              onClick={() => createSession("price_1NL5c7HnmJ2HS428ESg3ZI3p")}
+            >
+              Subscribe
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 };
 

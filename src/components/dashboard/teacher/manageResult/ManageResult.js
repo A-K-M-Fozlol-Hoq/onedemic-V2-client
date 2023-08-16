@@ -73,6 +73,7 @@ const ManageResult = ({ courseId }) => {
                 selectExam={selectExam}
                 setSelectExam={setSelectExam}
                 resultData={resultData}
+                setResultData={setResultData}
               />
             </div>
           )}
