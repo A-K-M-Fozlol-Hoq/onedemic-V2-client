@@ -8,6 +8,7 @@ const ViewCourses = ({
   showChat = false,
   createExam = false,
   showExam = false,
+  viewResult = false,
 }) => {
   const { user } = useSelector((state) => state.auth);
   const { data, isLoading } = useGetCoursesQuery({
@@ -30,6 +31,7 @@ const ViewCourses = ({
             showChat={showChat}
             createExam={createExam}
             showExam={showExam}
+            viewResult={viewResult}
           />
         </>
       ) : (

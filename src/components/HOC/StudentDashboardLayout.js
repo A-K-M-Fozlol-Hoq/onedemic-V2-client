@@ -19,7 +19,6 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/features/auth/authSlice";
 

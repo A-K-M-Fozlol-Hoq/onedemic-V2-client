@@ -15,17 +15,25 @@ const Index = () => {
   if (user.role === "student") {
     return (
       <StudentDashboardLayout>
-        <h1>Enrolled Courses</h1>
+        <h1
+          style={{ textAlign: "center", fontSize: "30", marginTop: "50px" }}
+          className="text-center text-gray-800 shadow-lg p-4 rounded-lg bg-white text-2xl md:w-1/2 sm:w-full m-auto"
+        >
+          Enrolled Courses
+        </h1>
         <ViewCourses />
       </StudentDashboardLayout>
     );
   } else {
     return (
       <TeacherDashboardLayout>
-        <h1 style={{ textAlign: "center", fontSize: "30", marginTop: "50px" }}>
+        <h1
+          style={{ textAlign: "center", fontSize: "30", marginTop: "50px" }}
+          className="text-center text-gray-800 shadow-lg p-4 rounded-lg bg-white text-2xl md:w-1/2 sm:w-full m-auto"
+        >
           Created Courses
         </h1>
-        <ViewCourses redirectDetails={true} />
+        <ViewCourses />
       </TeacherDashboardLayout>
     );
   }

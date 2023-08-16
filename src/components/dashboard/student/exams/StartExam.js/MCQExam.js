@@ -1,9 +1,11 @@
 import { notify } from "@/helpers/utilsFuctions";
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const MCQExam = ({ examDetails }) => {
+  const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showSubmitButton, setShowSubmitButton] = useState(false);
@@ -83,6 +85,7 @@ const MCQExam = ({ examDetails }) => {
         }
       );
       notify("MCQ submitted successfully", "success");
+      push("/dashboard/courses");
 
       // console.log("Completed MCQs:", completedMCQs);
     } catch (err) {

@@ -2,10 +2,12 @@
 import { notify } from "@/helpers/utilsFuctions";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const WrittenExam = ({ examDetails }) => {
+  const { push } = useRouter();
   const { user } = useSelector((state) => state.auth);
   const [answerScript, setAnswerScript] = useState("");
   // Calculate the aspect ratio of the image
@@ -73,6 +75,7 @@ const WrittenExam = ({ examDetails }) => {
       );
       if (response?.data?.isSuccess) {
         notify("CQ submitted successfully", "success");
+        push("/dashboard/courses");
       }
 
       // console.log("Completed MCQs:", completedMCQs);

@@ -2,8 +2,8 @@ import TeacherDashboardLayout from "@/components/HOC/TeacherDashboardLayout";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
-import CreateExam from "./CreateExam";
 import ViewCourses from "../../shared/ViewCourses/ViewCourses";
+import ManageResult from "./ManageResult";
 
 const Index = ({ courseId = null }) => {
   const { push } = useRouter();
@@ -15,7 +15,7 @@ const Index = ({ courseId = null }) => {
   if (courseId) {
     return (
       <TeacherDashboardLayout>
-        <CreateExam courseId={courseId} />
+        <ManageResult courseId={courseId} />
       </TeacherDashboardLayout>
     );
   }
@@ -26,9 +26,9 @@ const Index = ({ courseId = null }) => {
         style={{ textAlign: "center", fontSize: "30", marginTop: "50px" }}
         className="text-center text-gray-800 shadow-lg p-4 rounded-lg bg-white text-2xl md:w-1/2 sm:w-full m-auto"
       >
-        Select Course To Create Exam
+        Select Course To View Result
       </h1>
-      <ViewCourses createExam={true} />
+      <ViewCourses viewResult={true} />
     </TeacherDashboardLayout>
   );
 };

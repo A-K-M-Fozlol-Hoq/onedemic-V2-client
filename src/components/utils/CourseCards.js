@@ -15,6 +15,7 @@ const CourseCards = ({
   showChat = false,
   createExam = false,
   showExam = false,
+  viewResult = false,
 }) => {
   const { push } = useRouter();
 
@@ -31,6 +32,9 @@ const CourseCards = ({
   const redirectViewExam = (id) => {
     push(`/dashboard/exams/${id}`);
   };
+  const redirectViewresult = (id) => {
+    push(`/dashboard/manage-result/${id}`);
+  };
   return (
     <section className="flex flex-wrap justify-center mt-8">
       {courses.map((course) => (
@@ -46,7 +50,7 @@ const CourseCards = ({
               className="w-full h-48 object-cover rounded-md"
             />
             <Typography variant="h6" mt={2} align="center" gutterBottom>
-              Course {course.name}
+              Course (name): {course.name}
             </Typography>
             {redirectDetails && (
               <Button
@@ -86,6 +90,16 @@ const CourseCards = ({
                 className="mt-4"
               >
                 View Exams
+              </Button>
+            )}
+            {viewResult && (
+              <Button
+                onClick={() => redirectViewresult(course._id)}
+                variant="contained"
+                color="primary"
+                className="mt-4"
+              >
+                View Result
               </Button>
             )}
             {/* <div className="flex items-center mt-2">

@@ -1,16 +1,14 @@
-import { useGetExamsQuery } from "@/features/api/exam/examApi";
+import { useGetAllExamsQuery } from "@/features/api/exam/examApi";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import SelectExam from "./SelectExam";
-import StartExam from "./StartExam.js/StartExam";
 
-const ViewExams = ({ courseId }) => {
+const ViewExams = ({ courseId, selectExam, setSelectExam }) => {
   const { user } = useSelector((state) => state.auth);
-  const { data, isLoading } = useGetExamsQuery({
+  const { data, isLoading } = useGetAllExamsQuery({
     accessToken: user?.accessToken,
     courseId: courseId,
   });
-  const [selectExam, setSelectExam] = useState({});
 
   if (isLoading) {
     return (
@@ -29,12 +27,9 @@ const ViewExams = ({ courseId }) => {
       </div>
     );
   }
+
   if (data?.data?.length) {
-    if (selectExam?._id) {
-      return <StartExam exam={selectExam} />;
-    } else {
-      return <SelectExam exams={data?.data} setSelectExam={setSelectExam} />;
-    }
+    return <SelectExam exams={data?.data} setSelectExam={setSelectExam} />;
   }
 
   return (
