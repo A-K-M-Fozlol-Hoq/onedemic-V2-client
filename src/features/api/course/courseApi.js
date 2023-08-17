@@ -44,10 +44,50 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["coruses"],
     }),
+    handlePendingStudent: builder.mutation({
+      query: ({ accessToken, data }) => ({
+        url: `/course/approve-or-reject-pending-students`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: data,
+      }),
+    }),
     removeStudent: builder.mutation({
       query: ({ accessToken, data }) => ({
         url: `/course/remove-student`,
-        method: "POST",
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: data,
+      }),
+    }),
+    blockStudent: builder.mutation({
+      query: ({ accessToken, data }) => ({
+        url: `/course/block-student`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: data,
+      }),
+    }),
+    unblockStudent: builder.mutation({
+      query: ({ accessToken, data }) => ({
+        url: `/course/unblock-student`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: data,
+      }),
+    }),
+    unblockAndAddStudent: builder.mutation({
+      query: ({ accessToken, data }) => ({
+        url: `/course/unblock-and-add-student`,
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -62,5 +102,9 @@ export const {
   useGetCoursesQuery,
   useGetSingleCourseQuery,
   useEnrollCourseMutation,
+  useHandlePendingStudentMutation,
   useRemoveStudentMutation,
+  useBlockStudentMutation,
+  useUnblockStudentMutation,
+  useUnblockAndAddStudentMutation,
 } = courseApi;

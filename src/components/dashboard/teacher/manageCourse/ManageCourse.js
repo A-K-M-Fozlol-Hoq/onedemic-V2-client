@@ -1,4 +1,11 @@
-import { useGetSingleCourseQuery } from "@/features/api/course/courseApi";
+import {
+  useBlockStudentMutation,
+  useGetSingleCourseQuery,
+  useHandlePendingStudentMutation,
+  useRemoveStudentMutation,
+  useUnblockAndAddStudentMutation,
+  useUnblockStudentMutation,
+} from "@/features/api/course/courseApi";
 import {
   Button,
   Paper,
@@ -12,11 +19,12 @@ import {
 import { Tooltip } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const ManageCourse = ({ courseId }) => {
   const { user } = useSelector((state) => state.auth);
+  const [courseData, setCourseData] = useState(undefined);
   const { data, isLoading } = useGetSingleCourseQuery(
     {
       accessToken: user?.accessToken,
@@ -24,11 +32,58 @@ const ManageCourse = ({ courseId }) => {
     },
     { staleTime: 0 }
   );
+  const [
+    handlePendingStudent,
+    {
+      isError: handlePendingStudentError,
+      isSuccess: handlePendingStudentSuccess,
+      error: handlePendingStudentErrorMessage,
+    },
+  ] = useHandlePendingStudentMutation();
+
+  const [
+    removeStudent,
+    {
+      isError: removeStudentError,
+      isSuccess: removeStudentSuccess,
+      error: removeStudentErrorMessage,
+    },
+  ] = useRemoveStudentMutation();
+
+  const [
+    blockStudent,
+    {
+      isError: blockStudentError,
+      isSuccess: blockStudentSuccess,
+      error: blockStudentErrorMessage,
+    },
+  ] = useBlockStudentMutation();
+
+  const [
+    unblockStudent,
+    {
+      isError: unblockStudentError,
+      isSuccess: unblockStudentSuccess,
+      error: unblockStudentErrorMessage,
+    },
+  ] = useUnblockStudentMutation();
+
+  const [
+    unblockAndAddStudent,
+    {
+      isError: unblockAndAddStudentError,
+      isSuccess: unblockAndAddStudentSuccess,
+      error: unblockAndAddStudentErrorMessage,
+    },
+  ] = useUnblockAndAddStudentMutation();
 
   const router = useRouter();
 
   useEffect(() => {
-    console.log({ data, isLoading });
+    if (data?.isSuccess) {
+      setCourseData(data.data);
+      console.log(data.data);
+    }
   }, [data, isLoading]);
 
   if (isLoading) {
@@ -61,29 +116,173 @@ const ManageCourse = ({ courseId }) => {
     );
   }
 
-  const courseData = data?.data;
+  // const courseData = data?.data;
 
   const handleRemove = (studentId) => {
-    console.log(
-      `Remove student with ID: ${studentId} from course: ${courseId}`
+    const studentToRemove = courseData.students.find(
+      (student) => student._id === studentId
     );
-    // need to send courseId , studentId and accessToken
+
+    if (studentToRemove) {
+      const data = {
+        courseId: courseId,
+        studentId: studentId,
+      };
+
+      removeStudent({ accessToken: user.accessToken, data });
+      // Remove the student from students array
+      const updatedStudents = courseData.students.filter(
+        (student) => student._id !== studentId
+      );
+
+      // Update courseData with new arrays
+      const updatedCourseData = {
+        ...courseData,
+        students: updatedStudents,
+      };
+
+      // Update local state with modified courseData
+      setCourseData(updatedCourseData);
+    }
   };
 
   const handleBlock = (studentId) => {
-    console.log(`Block student with ID: ${studentId}`);
+    const studentToBlock = courseData.students.find(
+      (student) => student._id === studentId
+    );
+
+    if (studentToBlock) {
+      const data = {
+        courseId: courseId,
+        studentId: studentId,
+      };
+
+      blockStudent({ accessToken: user.accessToken, data });
+      // Remove the student from students array
+      const updatedStudents = courseData.students.filter(
+        (student) => student._id !== studentId
+      );
+
+      // Add the student to blockedStudents array
+      const updatedBlockedStudents = [
+        ...courseData.blockedStudents,
+        studentToBlock,
+      ];
+
+      // Update courseData with new arrays
+      const updatedCourseData = {
+        ...courseData,
+        students: updatedStudents,
+        blockedStudents: updatedBlockedStudents,
+      };
+
+      // Update local state with modified courseData
+      setCourseData(updatedCourseData);
+    }
+  };
+
+  const handleRollBack = (studentId) => {
+    const studentToUnBlock = courseData.blockedStudents.find(
+      (student) => student._id === studentId
+    );
+
+    if (studentToUnBlock) {
+      const data = {
+        courseId: courseId,
+        studentId: studentId,
+      };
+
+      unblockAndAddStudent({ accessToken: user.accessToken, data });
+      // Remove the student from blockedStudents array
+      const updatedBlockedStudents = courseData.blockedStudents.filter(
+        (student) => student._id !== studentId
+      );
+
+      // Add the student to students array
+      const updatedStudents = [...courseData.students, studentToUnBlock];
+
+      // Update courseData with new arrays
+      const updatedCourseData = {
+        ...courseData,
+        students: updatedStudents,
+        blockedStudents: updatedBlockedStudents,
+      };
+
+      // Update local state with modified courseData
+      setCourseData(updatedCourseData);
+    }
   };
 
   const handleUnblock = (studentId) => {
-    console.log(`Unblock student with ID: ${studentId}`);
+    const studentToUnBlock = courseData.blockedStudents.find(
+      (student) => student._id === studentId
+    );
+
+    if (studentToUnBlock) {
+      const data = {
+        courseId: courseId,
+        studentId: studentId,
+      };
+
+      unblockStudent({ accessToken: user.accessToken, data });
+      // Remove the student from blockedStudents array
+      const updatedBlockedStudents = courseData.blockedStudents.filter(
+        (student) => student._id !== studentId
+      );
+
+      // Update courseData with new arrays
+      const updatedCourseData = {
+        ...courseData,
+        blockedStudents: updatedBlockedStudents,
+      };
+
+      // Update local state with modified courseData
+      setCourseData(updatedCourseData);
+    }
   };
 
-  const handleAccept = (studentId) => {
-    console.log(`Accept student with ID: ${studentId}`);
-  };
+  const handleAcceptOrReject = (studentId, doesAccept = false) => {
+    const studentToAcceptOrReject = courseData.pendingStudents.find(
+      (student) => student._id === studentId
+    );
 
-  const handleReject = (studentId) => {
-    console.log(`Reject student with ID: ${studentId}`);
+    if (studentToAcceptOrReject) {
+      let action;
+      if (doesAccept) {
+        action = "accept";
+      } else {
+        action = "reject";
+      }
+      const data = {
+        courseId: courseId,
+        studentId: studentId,
+        action,
+      };
+
+      handlePendingStudent({ accessToken: user.accessToken, data });
+      // Remove the student from PendingStudents array
+      const updatedPendingStudents = courseData.pendingStudents.filter(
+        (student) => student._id !== studentId
+      );
+
+      // Add the student to students array if accepted
+      let updatedStudents = [];
+      if (doesAccept) {
+        updatedStudents = [...courseData.students, studentToUnBlock];
+      } else {
+        updatedStudents = [...courseData.students];
+      }
+
+      // Update courseData with new arrays
+      const updatedCourseData = {
+        ...courseData,
+        students: updatedStudents,
+        pendingStudents: updatedPendingStudents,
+      };
+
+      // Update local state with modified courseData
+      setCourseData(updatedCourseData);
+    }
   };
 
   const handleBack = () => {
@@ -109,12 +308,12 @@ const ManageCourse = ({ courseId }) => {
           <div className="gap-1">
             <Tooltip title={courseId}>
               <h1 className="text-4xl font-bold text-gray-700">
-                {courseData.name}
+                {courseData?.name}
               </h1>
             </Tooltip>
-            {courseData.photo && (
+            {courseData?.photo && (
               <Image
-                src={courseData.photo}
+                src={courseData?.photo}
                 alt="Course Photo"
                 width={180}
                 height={180}
@@ -126,13 +325,13 @@ const ManageCourse = ({ courseId }) => {
             {courseData && (
               <div className="p-12">
                 <p className="flex text-xl">
-                  Students : {courseData.students.length}
+                  Students : {courseData?.students.length}
                 </p>
                 <p className="flex text-xl">
-                  Blocked: {courseData.blockedStudents.length}
+                  Blocked: {courseData?.blockedStudents.length}
                 </p>
                 <p className="flex text-xl">
-                  Pending: {courseData.pendingStudents.length}
+                  Pending: {courseData?.pendingStudents.length}
                 </p>
               </div>
             )}
@@ -153,7 +352,7 @@ const ManageCourse = ({ courseId }) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {courseData.students.map((student) => (
+                    {courseData?.students.map((student) => (
                       <TableRow key={student._id}>
                         <TableCell>{student.name}</TableCell>
                         <TableCell>{student.email}</TableCell>
@@ -195,7 +394,7 @@ const ManageCourse = ({ courseId }) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {courseData.blockedStudents.map((student) => (
+                    {courseData?.blockedStudents.map((student) => (
                       <TableRow key={student._id}>
                         <TableCell>{student.name}</TableCell>
                         <TableCell>{student.email}</TableCell>
@@ -205,6 +404,12 @@ const ManageCourse = ({ courseId }) => {
                             onClick={() => handleUnblock(student._id)}
                           >
                             Unblock
+                          </Button>
+                          <Button
+                            color="primary"
+                            onClick={() => handleRollBack(student._id)}
+                          >
+                            RollBack
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -231,20 +436,24 @@ const ManageCourse = ({ courseId }) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {courseData.pendingStudents.map((student) => (
+                    {courseData?.pendingStudents.map((student) => (
                       <TableRow key={student._id}>
                         <TableCell>{student.name}</TableCell>
                         <TableCell>{student.email}</TableCell>
                         <TableCell>
                           <Button
                             color="primary"
-                            onClick={() => handleAccept(student._id)}
+                            onClick={() =>
+                              handleAcceptOrReject(student._id, true)
+                            }
                           >
                             Accept
                           </Button>
                           <Button
                             color="secondary"
-                            onClick={() => handleReject(student._id)}
+                            onClick={() =>
+                              handleAcceptOrReject(student._id, false)
+                            }
                           >
                             Reject
                           </Button>
