@@ -246,13 +246,14 @@ const ManageCourse = ({ courseId }) => {
       (student) => student._id === studentId
     );
 
+    let action;
+    if (doesAccept) {
+      action = "accept";
+    } else {
+      action = "reject";
+    }
+
     if (studentToAcceptOrReject) {
-      let action;
-      if (doesAccept) {
-        action = "accept";
-      } else {
-        action = "reject";
-      }
       const data = {
         courseId: courseId,
         studentId: studentId,
@@ -268,11 +269,13 @@ const ManageCourse = ({ courseId }) => {
       // Add the student to students array if accepted
       let updatedStudents = [];
       if (doesAccept) {
-        updatedStudents = [...courseData.students, studentToUnBlock];
+        updatedStudents = [...courseData.students, studentToAcceptOrReject];
       } else {
         updatedStudents = [...courseData.students];
       }
 
+      console.log(updatedPendingStudents, "updatedPendingStudents", doesAccept);
+      console.log(updatedStudents, "updatedStudents", doesAccept);
       // Update courseData with new arrays
       const updatedCourseData = {
         ...courseData,
