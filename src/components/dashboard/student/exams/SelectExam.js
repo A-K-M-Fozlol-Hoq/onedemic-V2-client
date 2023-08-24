@@ -42,7 +42,7 @@ const SelectExam = ({ exams, setSelectExam }) => {
               </Typography>
               <Button
                 onClick={() => setSelectExam(exam)}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className="mt-4"
                 disabled={!isExamRunning} // Disable the button if the exam is not running

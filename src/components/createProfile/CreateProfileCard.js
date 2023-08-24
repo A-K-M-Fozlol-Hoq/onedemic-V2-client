@@ -73,6 +73,7 @@ const CreateProfileCard = (props) => {
         className="bg-white text-blue-500 font-bold py-2 px-4 rounded-lg mt-5 w-full capitalize"
         type="submit"
         onClick={() => setRole(role)}
+        disabled={!data.image}
       >
         Create {role} Profile
       </button>

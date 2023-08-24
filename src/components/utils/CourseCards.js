@@ -55,7 +55,7 @@ const CourseCards = ({
             {redirectDetails && (
               <Button
                 onClick={() => redirectManageCourse(course._id)}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className="mt-4"
               >
@@ -65,7 +65,7 @@ const CourseCards = ({
             {showChat && (
               <Button
                 onClick={() => redirectMessaging(course._id)}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className="mt-4"
               >
@@ -75,7 +75,7 @@ const CourseCards = ({
             {createExam && (
               <Button
                 onClick={() => redirectCreateExam(course._id)}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className="mt-4"
               >
@@ -85,7 +85,7 @@ const CourseCards = ({
             {showExam && (
               <Button
                 onClick={() => redirectViewExam(course._id)}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className="mt-4"
               >
@@ -95,7 +95,7 @@ const CourseCards = ({
             {viewResult && (
               <Button
                 onClick={() => redirectViewresult(course._id)}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className="mt-4"
               >

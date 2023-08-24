@@ -137,7 +137,7 @@ const ResultTable = ({
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span style={{ marginRight: "10px" }}>{result.mark}</span>
-                      {result.examType === "mcq" && (
+                      {/* {result.examType === "mcq" && (
                         <span
                           onClick={() => {
                             console.log(result);
@@ -147,7 +147,7 @@ const ResultTable = ({
                         >
                           Edit
                         </span>
-                      )}
+                      )} */}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button

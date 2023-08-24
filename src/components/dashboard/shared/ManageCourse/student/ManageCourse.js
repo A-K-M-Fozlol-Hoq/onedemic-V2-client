@@ -87,7 +87,7 @@ const ManageCourse = () => {
             }
           />
           <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             className="mt-4"
             onClick={handleEnrollCourse}

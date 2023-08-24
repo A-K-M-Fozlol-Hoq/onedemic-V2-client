@@ -67,7 +67,7 @@ const SelectExam = ({ exams, setSelectExam }) => {
 
               <Button
                 onClick={() => setSelectExam(exam)}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className="mt-4"
                 disabled={!isExamStarted} // Disable the button if the exam is not started yet
@@ -76,7 +76,7 @@ const SelectExam = ({ exams, setSelectExam }) => {
               </Button>
               <Button
                 onClick={() => handleDeleteExam(exam)}
-                variant="contained"
+                variant="outlined"
                 color="warning"
                 className="mt-4"
                 disabled={!isDeletable} // Disable the button if the exam already started
