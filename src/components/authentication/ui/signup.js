@@ -4,6 +4,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser, googleLogin } from "../../../features/auth/authSlice";
+import { notify } from "@/helpers/utilsFuctions";
 
 const SignupUI = () => {
   const { handleSubmit, register, reset, control } = useForm();
@@ -30,12 +31,13 @@ const SignupUI = () => {
 
   useEffect(() => {
     if (isError && error) {
-      // toast.error(error);
+      notify(error, "error");
     }
   }, [isError, error]);
 
   const onSubmit = (data) => {
     // console.log(data);
+
     dispatch(createUser({ email: data.email, password: data.password }));
   };
 
