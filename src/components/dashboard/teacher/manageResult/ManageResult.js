@@ -23,7 +23,7 @@ const ManageResult = ({ courseId }) => {
       return;
     }
     const response = await axios.get(
-      `${" https://onedemic-server.vercel.app/api/v1"}/result/get-result/${examId}`,
+      `https://onedemic-server.vercel.app/api/v1/result/get-result/${examId}`,
       {
         headers: { Authorization: `Bearer ${user.accessToken}` },
       }

@@ -48,9 +48,7 @@ function PrivateComponent({ children }) {
           //   getUser({ accessToken: user.accessToken, email: user.email })
           // );
           const res = await fetch(
-            `${" https://onedemic-server.vercel.app/api/v1"}/user/getUser/${
-              user?.email
-            }`,
+            `https://onedemic-server.vercel.app/api/v1/user/getUser/${user?.email}`,
             {
               headers: {
                 "Content-Type": "application/json",

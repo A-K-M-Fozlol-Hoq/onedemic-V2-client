@@ -48,9 +48,7 @@ const ManageProfile = () => {
 
     axios
       .put(
-        `${" https://onedemic-server.vercel.app/api/v1"}/user/update-user-name-and-profile/${
-          user?.email
-        }`,
+        `https://onedemic-server.vercel.app/api/v1/user/update-user-name-and-profile/${user?.email}`,
         body,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
@@ -71,7 +69,7 @@ const ManageProfile = () => {
           "error"
         );
       });
-    // `${" https://onedemic-server.vercel.app/api/v1"}/user/update-user-name-and-profile/${user.email}`
+    // `https://onedemic-server.vercel.app/api/v1/user/update-user-name-and-profile/${user.email}`
   };
 
   return (

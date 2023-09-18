@@ -110,7 +110,7 @@ const CreateExam = ({ courseId }) => {
 
     try {
       const response = await axios.post(
-        `${" https://onedemic-server.vercel.app/api/v1"}/exam/create-exam`,
+        `https://onedemic-server.vercel.app/api/v1/exam/create-exam`,
         bodyDate,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },

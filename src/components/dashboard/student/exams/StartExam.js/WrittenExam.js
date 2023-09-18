@@ -67,7 +67,7 @@ const WrittenExam = ({ examDetails }) => {
 
     try {
       const response = await axios.post(
-        `${" https://onedemic-server.vercel.app/api/v1"}/result/save-cq`,
+        `https://onedemic-server.vercel.app/api/v1/result/save-cq`,
         bodyDate,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },

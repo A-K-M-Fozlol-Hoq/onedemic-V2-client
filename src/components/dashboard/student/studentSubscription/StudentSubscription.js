@@ -11,7 +11,7 @@ const StudentSubscription = () => {
     console.log("creating session");
     try {
       const data = await axios.post(
-        `${" https://onedemic-server.vercel.app/api/v1"}/stripe/create-session`,
+        `https://onedemic-server.vercel.app/api/v1/stripe/create-session`,
         {
           priceId,
           email: user?.email,

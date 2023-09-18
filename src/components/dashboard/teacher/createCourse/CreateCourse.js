@@ -116,7 +116,7 @@ const CreateCourse = () => {
   //
   const debouncedSendAPIRequest = debounce(async (value) => {
     const response = await axios.get(
-      `${" https://onedemic-server.vercel.app/api/v1"}/course/is-code-available/${value}`,
+      `https://onedemic-server.vercel.app/api/v1/course/is-code-available/${value}`,
       {
         headers: { Authorization: `Bearer ${user.accessToken}` },
       }
