@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import { Scrollbars } from "react-custom-scrollbars";
 import classNames from "classnames";
 
-const serverURL = "http://localhost:5000";
+// const serverURL = "http://localhost:5000";
+const serverURL = "https://onedemic-server.vercel.app";
 // const socket = io(serverURL); // Initialize Socket.io client
 let socket;
 
