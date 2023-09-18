@@ -20,7 +20,7 @@ const ManageProfile = () => {
   const handleFileUpload = async (file) => {
     try {
       const imageData = new FormData();
-      imageData.set("key", process.env.NEXT_PUBLIC_IMGBB_API_KEY);
+      imageData.set("key", "4a118cdd62eafe33d42897dea91efe22");
       imageData.append("image", file);
       notify("Image uploading...", "info");
 
@@ -48,7 +48,9 @@ const ManageProfile = () => {
 
     axios
       .put(
-        `${process.env.NEXT_PUBLIC_DEV_URL}/user/update-user-name-and-profile/${user?.email}`,
+        `${" https://onedemic-server.vercel.app/api/v1"}/user/update-user-name-and-profile/${
+          user?.email
+        }`,
         body,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
@@ -69,7 +71,7 @@ const ManageProfile = () => {
           "error"
         );
       });
-    // `${process.env.NEXT_PUBLIC_DEV_URL}/user/update-user-name-and-profile/${user.email}`
+    // `${" https://onedemic-server.vercel.app/api/v1"}/user/update-user-name-and-profile/${user.email}`
   };
 
   return (

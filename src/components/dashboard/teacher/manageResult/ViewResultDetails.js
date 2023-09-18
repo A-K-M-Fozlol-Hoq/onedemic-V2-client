@@ -64,7 +64,7 @@ const ViewResultDetails = ({
       };
 
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_DEV_URL}/result/update-mark`,
+        `${" https://onedemic-server.vercel.app/api/v1"}/result/update-mark`,
         bodyDate,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },

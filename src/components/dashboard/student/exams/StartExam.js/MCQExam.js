@@ -78,7 +78,7 @@ const MCQExam = ({ examDetails }) => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_DEV_URL}/result/save-mcq`,
+        `${" https://onedemic-server.vercel.app/api/v1"}/result/save-mcq`,
         bodyDate,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },

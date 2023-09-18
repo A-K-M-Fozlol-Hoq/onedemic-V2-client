@@ -16,7 +16,7 @@ const MCQForm = ({ numOfMCQs, setMcqQuestions }) => {
       return;
     }
     const resonse = await axios.post(
-      `${process.env.NEXT_PUBLIC_DEV_URL}/mcq`,
+      `${" https://onedemic-server.vercel.app/api/v1"}/mcq`,
       {
         searchString: searchTerm,
       },

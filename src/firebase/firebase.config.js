@@ -1,15 +1,15 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
+  apiKey: "AIzaSyBQSyvinDdSC0j1rhI-ASGKlVMS6Wv2cgo",
+  authDomain: "onedemic-v2.firebaseapp.com",
+  projectId: "onedemic-v2",
+  storageBucket: "onedemic-v2.appspot.com",
+  messagingSenderId: 387500634825,
+  appId: " https://onedemic-server.vercel.app/api/v1",
 };
 
 // Initialize Firebase

@@ -10,7 +10,9 @@ const StartExam = ({ exam }) => {
   const { user } = useSelector((state) => state.auth);
   const getExam = async () => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DEV_URL}/exam/get-exam/${exam._id}`,
+      `${" https://onedemic-server.vercel.app/api/v1"}/exam/get-exam/${
+        exam._id
+      }`,
       {
         headers: { Authorization: `Bearer ${user.accessToken}` },
       }

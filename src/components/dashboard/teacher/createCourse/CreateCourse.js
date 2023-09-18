@@ -55,7 +55,7 @@ const CreateCourse = () => {
     const file = e.target.files[0];
     try {
       const imageData = new FormData();
-      imageData.set("key", process.env.NEXT_PUBLIC_IMGBB_API_KEY);
+      imageData.set("key", "4a118cdd62eafe33d42897dea91efe22");
       imageData.append("image", file);
       notify("Image uploading...", "info");
 
@@ -116,7 +116,7 @@ const CreateCourse = () => {
   //
   const debouncedSendAPIRequest = debounce(async (value) => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DEV_URL}/course/is-code-available/${value}`,
+      `${" https://onedemic-server.vercel.app/api/v1"}/course/is-code-available/${value}`,
       {
         headers: { Authorization: `Bearer ${user.accessToken}` },
       }

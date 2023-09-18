@@ -9,7 +9,7 @@ const CreateProfileCard = (props) => {
   const handleFileUpload = async (file) => {
     try {
       const imageData = new FormData();
-      imageData.set("key", process.env.NEXT_PUBLIC_IMGBB_API_KEY);
+      imageData.set("key", "4a118cdd62eafe33d42897dea91efe22");
       imageData.append("image", file);
       notify("Image uploading...", "info");
 

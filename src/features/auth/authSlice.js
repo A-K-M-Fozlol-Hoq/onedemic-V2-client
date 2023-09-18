@@ -44,7 +44,7 @@ export const getUser = createAsyncThunk(
   "auth/getUser",
   async ({ accessToken, email }) => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_DEV_URL}/user/getUser/${email}`,
+      `${" https://onedemic-server.vercel.app/api/v1"}/user/getUser/${email}`,
       {
         headers: {
           "Content-Type": "application/json",

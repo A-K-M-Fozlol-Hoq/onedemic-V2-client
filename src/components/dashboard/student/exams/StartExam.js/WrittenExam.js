@@ -28,7 +28,7 @@ const WrittenExam = ({ examDetails }) => {
 
       try {
         const imageData = new FormData();
-        imageData.set("key", process.env.NEXT_PUBLIC_IMGBB_API_KEY);
+        imageData.set("key", "4a118cdd62eafe33d42897dea91efe22");
         imageData.append("image", newFile);
 
         const response = await fetch("https://api.imgbb.com/1/upload", {
@@ -67,7 +67,7 @@ const WrittenExam = ({ examDetails }) => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_DEV_URL}/result/save-cq`,
+        `${" https://onedemic-server.vercel.app/api/v1"}/result/save-cq`,
         bodyDate,
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
